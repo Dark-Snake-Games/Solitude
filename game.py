@@ -3,63 +3,39 @@ from pygame import Vector2
 from pygame.display import update
 from sys import exit
 from random import randint
+default_title = "Project: Solitude"
 
-from DSEngine.animated import AnimationSheet
-from DSEngine.etypes import pygame
-default_title="Project: SCP"
-
-class SCP999(AnimatedSprite2D):
-    def __init__(self, position=...):
-        sheet = AnimationSheet(default=Image2D("Test.png"))
-        self.last_secs = 0
-        super().__init__(sheet, 1, position)
-    
-    def render(self, window: Window):
-        if int(window.seconds-self.last_secs) >= 20:
-            rx = randint(0, window.size[0])
-            ry = randint(0, window.size[1])
-            pos = Vector2(rx, ry)
-            self.move_towards(pos)
-            self.last_secs = int(window.seconds)
-        super().render(window)
-
-def main_menu():
+def main():
     global default_title
-    window = Window(title=default_title, fps=120, size=(1280, 720), bg=(100, 100, 100))
+    window = Window(title=default_title, fps=60, size=(1280, 720), bg=(100, 100, 100))
     audio_man = AudioManager()
-    text = Text2D("Project: SCP", position=Vector2(530, 150))
-    play_button = Button("Play", position=Vector2(595, 280))
-    exit_button = Button("Exit", position=Vector2(600, 380))
+    image1 = Image2D(filename="Test.png", position=Vector2(150, 55))
+    image2 = Image2D(filename="Test1.png", position=Vector2(150, 55))
+    spritesheet1 = Spritesheet(image1, image1, image1, image1, image1, image2, image2, image2, image2, image2)
+    spritesheet2 = Spritesheet(image2, image1)
+    animationsheet = AnimationSheet(default=image1, normal=spritesheet1, back=spritesheet2)
+    sprite = AnimatedSprite2D(sheet=animationsheet, position=Vector2(150, 55))
+    text = Text2D("Hello World", position=Vector2(550, 335))
+    startpos = sprite.position
     text.init(window)
-    play_button.init(window)
-    exit_button.init(window)
+    sprite.init(window)
     while window.running:
         keys = window.frame()
-        if keys[27]:
-            #exit(1)
-            pass
-        elif play_button.pressed:
-            scp_999_scene()
-            play_button.pressed = False
-        elif exit_button.pressed:
-            exit(1)
-        else:
-            #print("Nothing pressed")
-            pass
-
-def scp_999_scene():
-    global default_title
-    window = Window(title=default_title, fps=120, size=(1280, 720), bg=(100, 100, 100))
-    audio_man = AudioManager()
-    text = Text2D("SCP-999", position=Vector2(550, 0))
-    scp = SCP999(position=Vector2(640, 360))
-    text.init(window)
-    scp.init(window)
-    scp.move_towards(Vector2(0, 0))
-    while window.running:
-        keys = window.frame()
+        #print(window.delta)
+        acc = Vector2(0.0, 0.0)
+        # if sprite.rect.right < (1280+startpos.x)+window.delta:
+        #     dkey = keys[key_to_scancode("d")]*window.delta
+        # else:
+        #     dkey = 0
+        # if sprite.rect.left > 0*window.delta:
+        #     akey = keys[key_to_scancode("a")]*window.delta
+        # else:
+        #     akey = 0
+        acc.x = (keys[key_to_scancode("d")]-keys[key_to_scancode("a")])*window.delta
+        acc.y = (keys[key_to_scancode("s")]-keys[key_to_scancode("w")])*window.delta
+        sprite.move(acc)
         if keys[27]:
             return 1
 
 if __name__ == "__main__":
-    main_menu()
+    main()
