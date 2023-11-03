@@ -15,24 +15,19 @@ def main():
     spritesheet2 = Spritesheet(image2, image1)
     animationsheet = AnimationSheet(default=image1, normal=spritesheet1, back=spritesheet2)
     sprite = AnimatedSprite2D(sheet=animationsheet, position=Vector2(150, 55))
-    text = Text2D("Hello World", position=Vector2(550, 335))
+    #text = Text2D("Hello World", position=Vector2(550, 335))
+    rect0 = Rect2D(layer=1, position=Vector2(0, 0), size=Vector2(50, 50))
     startpos = sprite.position
-    text.init(window)
+    rect0.init(window)
+    #text.init(window)
     sprite.init(window)
     while window.running:
         keys = window.frame()
-        #print(window.delta)
+        print(sprite.collision_sides)
         acc = Vector2(0.0, 0.0)
-        # if sprite.rect.right < (1280+startpos.x)+window.delta:
-        #     dkey = keys[key_to_scancode("d")]*window.delta
-        # else:
-        #     dkey = 0
-        # if sprite.rect.left > 0*window.delta:
-        #     akey = keys[key_to_scancode("a")]*window.delta
-        # else:
-        #     akey = 0
-        acc.x = (keys[key_to_scancode("d")]-keys[key_to_scancode("a")])*window.delta
-        acc.y = (keys[key_to_scancode("s")]-keys[key_to_scancode("w")])*window.delta
+        acc.x = (keys[key_to_scancode("d")]-keys[key_to_scancode("a")])#*window.delta
+        acc.y = (keys[key_to_scancode("s")]-keys[key_to_scancode("w")])#*window.delta
+        acc *= 3
         sprite.move(acc)
         if keys[27]:
             return 1
