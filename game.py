@@ -2,7 +2,7 @@ from DSEngine import *
 from pygame import Vector2
 from pygame.display import update
 from sys import exit
-from random import randint
+#from random import randint
 default_title = "Project: Solitude"
 
 def main():
@@ -30,7 +30,7 @@ def main():
     right = Spritesheet(right2,right2,right2,right2,right2,right2,right2,right2,right2,right2,right2,right2,\
                        right3,right3,right3,right3,right3,right3,right3,right3,right3,right3,right3,right3,)
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-    sprite = AnimatedSprite2D(sheet=animationsheet, position=Vector2(150, 55))
+    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55))
     #text = Text2D("Hello World", position=Vector2(550, 335))
     rect0 = Rect2D(layer=1, position=Vector2(0, 0), size=Vector2(50, 50))
     startpos = sprite.position
