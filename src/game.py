@@ -53,26 +53,34 @@ def main():
         keys = window.frame()
         acc = Vector2(0.0, 0.0)
 
+        sheet_to_play="" #sheet will be played after these if commands 
+        #so it wont switch between the animations every frame that makes animation stop on holding
+        #two buttons
+        
         if keys[key_to_scancode("d")]:
             sprite.sprites.default = right1
-            if not sprite.playing or sprite.sheet_name != "right":
-                sprite.play_sheet("right")
+            
+            sheet_to_play="right"
         if keys[key_to_scancode("a")]:
             sprite.sprites.default = left1
-            if not sprite.playing or sprite.sheet_name != "left":
-                sprite.play_sheet("left")
+            sheet_to_play="left"
         if keys[key_to_scancode("w")]:
             sprite.sprites.default = up1
-            if not sprite.playing or sprite.sheet_name != "up":
-                sprite.play_sheet("up")
+            sheet_to_play="up"
         if keys[key_to_scancode("s")]:
             sprite.sprites.default = down1
-            if not sprite.playing or sprite.sheet_name != "down":
-                sprite.play_sheet("down")
-
+            sheet_to_play="down"
+        
+        
         acc.x = (keys[key_to_scancode("d")]-keys[key_to_scancode("a")])#*window.delta
         acc.y = (keys[key_to_scancode("s")]-keys[key_to_scancode("w")])#*window.delta
-
+        
+        if acc==Vector2(0,0): sheet_to_play=""
+        if sheet_to_play !="" and (not sprite.playing or sprite.sheet_name != sheet_to_play):
+            sprite.play_sheet(sheet_to_play)
+        elif sheet_to_play=="":
+            sprite.frame=sprite.sheet_length
+            sprite.playing=False
         sprite.move(acc)
         print(f"Sprite position: {sprite.position}")
 
