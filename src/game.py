@@ -18,31 +18,32 @@ def main():
     window = Window(title=default_title, fps=60, size=(width, height), bg=(100, 100, 100))
     audio_man = AudioManager()
 
-    down1 = Image2D(filename="src/Assets/Player/tile000.png", position=Vector2(150, 55))
-    down2 = Image2D(filename="src/Assets/Player/tile001.png", position=Vector2(150, 55))
-    down3 = Image2D(filename="src/Assets/Player/tile002.png", position=Vector2(150, 55))
+    down1 = Image2D(filename="Assets/Player/tile000.png", position=Vector2(150, 55))
+    down2 = Image2D(filename="Assets/Player/tile001.png", position=Vector2(150, 55))
+    down3 = Image2D(filename="Assets/Player/tile002.png", position=Vector2(150, 55))
     down = Spritesheet(down2,down2,down2,down2,down2,down2,down2,down2,down2,down2,down2,down2,\
                         down3,down3,down3,down3,down3,down3,down3,down3,down3,down3,down3,down3,)
-    up1 = Image2D(filename="src/Assets/Player/tile003.png", position=Vector2(150, 55))
-    up2 = Image2D(filename="src/Assets/Player/tile004.png", position=Vector2(150, 55))
-    up3 = Image2D(filename="src/Assets/Player/tile005.png", position=Vector2(150, 55))
+    up1 = Image2D(filename="Assets/Player/tile003.png", position=Vector2(150, 55))
+    up2 = Image2D(filename="Assets/Player/tile004.png", position=Vector2(150, 55))
+    up3 = Image2D(filename="Assets/Player/tile005.png", position=Vector2(150, 55))
     up = Spritesheet(up2,up2,up2,up2,up2,up2,up2,up2,up2,up2,up2,up2,\
                      up3,up3,up3,up3,up3,up3,up3,up3,up3,up3,up3,up3,)
-    left1 = Image2D(filename="src/Assets/Player/tile006.png", position=Vector2(150, 55))
-    left2 = Image2D(filename="src/Assets/Player/tile007.png", position=Vector2(150, 55))
-    left3 = Image2D(filename="src/Assets/Player/tile008.png", position=Vector2(150, 55))
+    left1 = Image2D(filename="Assets/Player/tile006.png", position=Vector2(150, 55))
+    left2 = Image2D(filename="Assets/Player/tile007.png", position=Vector2(150, 55))
+    left3 = Image2D(filename="Assets/Player/tile008.png", position=Vector2(150, 55))
     left = Spritesheet(left2,left2,left2,left2,left2,left2,left2,left2,left2,left2,left2,left2,\
                        left3,left3,left3,left3,left3,left3,left3,left3,left3,left3,left3,left3,)
-    right1 = Image2D(filename="src/Assets/Player/tile009.png", position=Vector2(150, 55))
-    right2 = Image2D(filename="src/Assets/Player/tile010.png", position=Vector2(150, 55))
-    right3 = Image2D(filename="src/Assets/Player/tile011.png", position=Vector2(150, 55))
+    right1 = Image2D(filename="Assets/Player/tile009.png", position=Vector2(150, 55))
+    right2 = Image2D(filename="Assets/Player/tile010.png", position=Vector2(150, 55))
+    right3 = Image2D(filename="Assets/Player/tile011.png", position=Vector2(150, 55))
     right = Spritesheet(right2,right2,right2,right2,right2,right2,right2,right2,right2,right2,right2,right2,\
                        right3,right3,right3,right3,right3,right3,right3,right3,right3,right3,right3,right3,)
     
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
     sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55))
     # text = Text2D("Hello World", position=Vector2(550, 335))
-    rect0 = Rect2D(layer=1, position=Vector2(0, 0), size=Vector2(50, 50))
+    bedsheet=AnimationSheet(default=Image2D("Assets/bed.png"))
+    rect0 = AnimatedSprite2D(sheet=bedsheet,layer=1)
     startpos = sprite.position
 
     rect0.init(window)
