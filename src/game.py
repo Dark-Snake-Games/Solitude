@@ -80,6 +80,7 @@ def mainroominit():
     sprite.init(window)
 
 def mainroom(keys):
+    
     acc = Vector2(0.0, 0.0)
 
     sheet_to_play=""
@@ -110,7 +111,6 @@ def mainroom(keys):
 
     if acc==Vector2(0,0):
         sheet_to_play=""
-
     if sheet_to_play !="" and (not sprite.playing or sprite.sheet_name != sheet_to_play):
         sprite.play_sheet(sheet_to_play)
     elif sheet_to_play=="":
@@ -121,11 +121,11 @@ def mainroom(keys):
     sprite.position.x = max(0, min(sprite.position.x, WIDTH - SPR_SIZE["width"]))
     sprite.position.y = max(0, min(sprite.position.y, WIDTH - SPR_SIZE["height"]))
 
-
 scenes = {
     "main": scene(mainroom, mainroominit),
     "scenetest": scene(test, testinit)
 }
+
 
 def main():
     global TITLE, HEIGHT, WIDTH
@@ -134,7 +134,6 @@ def main():
     while window.running:
         keys = window.frame()
         scenes[SCN].scene(keys)
-
         if keys[27]:
             return 1
 
