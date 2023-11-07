@@ -43,20 +43,43 @@ rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1)
 startpos = sprite.position
 rect = Rect2D()
 
-SCENE = "scenetest"
+def resetwindow():
+    global window
+    window.layers = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], "GUI": []}
+
+def fakeinit():
+    pass
+
+class scene:
+    def __init__(self, scene, init = fakeinit, stop = resetwindow) -> None:
+        self.init, self.scene, self.stop = init, scene, stop
+
+SCN = "scenetest"
+def changescene(scn: str):
+    global SCN
+    scenes[SCN].stop()
+    SCN = scn
+    scenes[SCN].init()
+
+def testinit():
+    rect.init(window)
 
 def test(keys):
-    bedsheet.visible=False
-    sprite.visible=False
-    rect0.visible=False
+    # bedsheet.visible=False
+    # sprite.visible=False
+    # rect0.visible=False
 
     if keys[key_to_scancode(" ")]:
-        global SCENE
-        SCENE ="main"
-        print(SCENE)
+        global SCN
+        changescene("main")
+        print(SCN)
+
+def mainroominit():
+    rect0.init(window)
+    # text.init(window)
+    sprite.init(window)
 
 def mainroom(keys):
-    rect.visible=False
     acc = Vector2(0.0, 0.0)
 
     sheet_to_play=""
@@ -77,6 +100,10 @@ def mainroom(keys):
     if keys[key_to_scancode("s")]:
         sprite.sprites.default = down1
         sheet_to_play="down"
+    if keys[key_to_scancode("t")]:
+        global SCN
+        changescene("scenetest")
+        print(SCN)
 
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta
@@ -96,20 +123,17 @@ def mainroom(keys):
 
 
 scenes = {
-    "main": mainroom,
-    "scenetest": test
+    "main": scene(mainroom, mainroominit),
+    "scenetest": scene(test, testinit)
 }
 
 def main():
     global TITLE, HEIGHT, WIDTH
     rect.init(window)
-    rect0.init(window)
-    # text.init(window)
-    sprite.init(window)
 
     while window.running:
         keys = window.frame()
-        scenes[SCENE](keys)
+        scenes[SCN].scene(keys)
 
         if keys[27]:
             return 1
