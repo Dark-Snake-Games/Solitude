@@ -4,6 +4,10 @@ from pygame.display import update
 from sys import exit
 #from random import randint
 
+
+
+
+
 default_title = "Project: Solitude"
 height = 720
 width = 1280
@@ -52,23 +56,46 @@ startpos = sprite.position
 #end of variables moved from main()
 rect=Rect2D()
 
-scene="scenetest"
+def resetwindow():
+    global window
+    window.layers={1:[], 2:[], 3:[], 4:[], 5:[], 6:[],
+                       7:[], 8:[], 9:[], 10:[], "GUI":[]}
 
+def fakeinit():
+    pass
 
+class scene:
+    def __init__(self,scene,init=fakeinit,stop=resetwindow) -> None:
+        self.init, self.scene, self.stop = init, scene, stop
+
+scn="scenetest"
+def changescene(Scn:str):
+    global scn
+    scenes[scn].stop()
+    scn=Scn
+    scenes[scn].init()
+    
+    
+def testinit():
+    
+    rect.init(window)
 def test(keys):
-    bedsheet.visible=False
-    sprite.visible=False
-    rect0.visible=False
-    
+    # bedsheet.visible=False
+    # sprite.visible=False
+    # rect0.visible=False
     if keys[key_to_scancode(" ")]:
-        global scene
-        scene="main"
-        print(scene)
+        global scn
+        changescene("main")
+        print(scn)
     
-        
+def mainroominit():
+    
+    rect0.init(window)
+    # text.init(window)
+    sprite.init(window)
 
 def mainroom(keys):
-    rect.visible=False
+    
     acc = Vector2(0.0, 0.0)
 
     sheet_to_play="" #sheet will be played after these if commands 
@@ -92,6 +119,10 @@ def mainroom(keys):
     if keys[key_to_scancode("s")]:
         sprite.sprites.default = down1
         sheet_to_play="down"
+    if keys[key_to_scancode("t")]:
+        global scn
+        changescene("scenetest")
+        print(scn)
     
     
     acc.x = (keys[key_to_scancode("d")]-keys[key_to_scancode("a")])#*window.delta
@@ -117,22 +148,19 @@ def mainroom(keys):
 
 #usage of scenechanger
 #use the name of the key as the scene name
-#to add a function to a scene use it's name without the brackest("()")
+#to add functions to a scene use scene(scene,init,stop) or just scene(scene) use their names without the brackest("()") example: scene(sceneinit,thescene)
 
-#to change scene change the scene variable to the name of the scene
-scenes={"main":mainroom, "scenetest":test}
+#to change scene use changescene(name:str)
+scenes={"main":scene(mainroom,mainroominit), "scenetest":scene(test,testinit)}
 
 def main():
     
     global default_title, height, width#, sprite_width
     rect.init(window)
-    rect0.init(window)
-    # text.init(window)
-    sprite.init(window)
 
     while window.running:
         keys = window.frame()
-        scenes[scene](keys)
+        scenes[scn].scene(keys)
         
         if keys[27]:
             return 1
