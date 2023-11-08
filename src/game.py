@@ -36,30 +36,16 @@ right3 = Image2D(filename="Assets/Player/tile011.png", position=Vector2(150, 55)
 right = Spritesheet(*([right2] * 12 + [right3] * 12))
 
 animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55))
+sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(20,32-20),offset=Vector2(6,20))
+sprite.debug=True
 # text = Text2D("Hello World", position=Vector2(550, 335))
 bedsheet = AnimationSheet(default=Image2D("Assets/bed.png"), size=Vector2(64, 1))
 rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1)
 startpos = sprite.position
-rect = Rect2D()
+rect = Rect2D(position=Vector2(-20,-20),offset=Vector2(20,20))
 
-def resetwindow():
-    global window
-    window.layers = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], "GUI": []}
 
-def fakeinit():
-    pass
 
-class scene:
-    def __init__(self, scene, init = fakeinit, stop = resetwindow) -> None:
-        self.init, self.scene, self.stop = init, scene, stop
-
-SCN = "scenetest"
-def changescene(scn: str):
-    global SCN
-    scenes[SCN].stop()
-    SCN = scn
-    scenes[SCN].init()
 
 def testinit():
     rect.init(window)
@@ -68,7 +54,7 @@ def test(keys):
     # bedsheet.visible=False
     # sprite.visible=False
     # rect0.visible=False
-
+    print("test")
     if keys[key_to_scancode(" ")]:
         global SCN
         changescene("main")
@@ -121,19 +107,20 @@ def mainroom(keys):
     sprite.position.x = max(0, min(sprite.position.x, WIDTH - SPR_SIZE["width"]))
     sprite.position.y = max(0, min(sprite.position.y, WIDTH - SPR_SIZE["height"]))
 
-scenes = {
-    "main": scene(mainroom, mainroominit),
-    "scenetest": scene(test, testinit)
-}
 
+setscenes( {  "main": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
 
 def main():
+    changescene("scenetest")
+    
+    setmainwindow(window)
+    resetwindow()
     global TITLE, HEIGHT, WIDTH
     rect.init(window)
 
     while window.running:
         keys = window.frame()
-        scenes[SCN].scene(keys)
+        runscene(keys)
         if keys[27]:
             return 1
 
