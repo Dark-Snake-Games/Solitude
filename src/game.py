@@ -111,10 +111,11 @@ def mainroom(keys):
 setscenes( {  "main": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
 
 def main():
-    changescene("scenetest")
+    
     
     setmainwindow(window)
     resetwindow()
+    changescene("scenetest")
     global TITLE, HEIGHT, WIDTH
     rect.init(window)
 
