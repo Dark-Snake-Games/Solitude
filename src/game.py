@@ -7,7 +7,7 @@ from pygame import Vector2
 from pygame.display import update
 
 # from random import randint
-
+COUNTER=0
 TITLE = "Project: Solitude"
 HEIGHT = 720
 WIDTH = 1280
@@ -34,12 +34,15 @@ from test import *
 
 def main():
     
-    setscenes( {  "main": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
+    setscenes( {  "main0": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
-    changescene("scenetest")
+    changescene("main0")
+    
+    for e in range(1,10):
+        addscene("main"+str(e),scene(mainroom, mainroominit))
+    addscene("main10",scene(quit,quit))
     global TITLE, HEIGHT, WIDTH
-    rect.init(window)
 
     while window.running:
         keys = window.frame()

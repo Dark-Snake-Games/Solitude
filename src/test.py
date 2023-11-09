@@ -2,6 +2,7 @@ from DSEngine import *
 from game import *
 rect = Rect2D(position=Vector2(-20,-20),offset=Vector2(20,20))
 def testinit():
+    print("t")
     rect.init(window)
 
 def test(keys):
