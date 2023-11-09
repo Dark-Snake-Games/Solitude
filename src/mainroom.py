@@ -21,6 +21,8 @@ animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, righ
 sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(20,32-20),offset=Vector2(6,20))
 bedsheet = AnimationSheet(default=Image2D("Assets/bed.png"), size=Vector2(64, 1))
 rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1)
+bedarea=Area2D()
+bedarea.rect=rect0.rect
 startpos = sprite.position
 
 def mainroominit():
@@ -50,7 +52,7 @@ def mainroom(keys):
     if keys[key_to_scancode("s")]:
         sprite.sprites.default = down1
         sheet_to_play="down"
-    if sprite.is_colliding_with(rect0) and keys[key_to_scancode("e")]:
+    if sprite.is_colliding_with(bedarea) and keys[key_to_scancode("e")]:
         changescene("scenetest")
 
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta

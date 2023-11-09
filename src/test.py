@@ -8,7 +8,6 @@ def test(keys):
     # bedsheet.visible=False
     # sprite.visible=False
     # rect0.visible=False
-    print("test")
     if keys[key_to_scancode(" ")]:
         global SCN
         changescene("main")
