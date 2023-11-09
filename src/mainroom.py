@@ -26,9 +26,11 @@ bedarea.rect=rect0.rect
 startpos = sprite.position
 
 def mainroominit():
+    
     rect0.init(window)
     # text.init(window)
     sprite.init(window)
+    sprite.position=Vector2(150, 55)
 
 def mainroom(keys):
     
@@ -53,7 +55,9 @@ def mainroom(keys):
         sprite.sprites.default = down1
         sheet_to_play="down"
     if sprite.is_colliding_with(bedarea) and keys[key_to_scancode("e")]:
-        changescene("scenetest")
+        global COUNTER
+        COUNTER+=1
+        changescene("main"+str(COUNTER))
 
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta
