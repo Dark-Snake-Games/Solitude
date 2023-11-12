@@ -6,6 +6,7 @@ from DSEngine import *
 from pygame import Vector2
 from pygame.display import update
 
+
 # from random import randint
 COUNTER=0
 TITLE = "Project: Solitude"
@@ -21,6 +22,7 @@ audio_man = AudioManager()
 #import scenes here 
 from mainroom import *
 from test import *
+from platformr import *
 # text = Text2D("Hello World", position=Vector2(550, 335))
 
 
@@ -41,6 +43,7 @@ def main():
     
     for e in range(1,10):
         addscene("main"+str(e),scene(mainroom, mainroominit))
+    addscene("main1",scene(platformer,platformerinit))
     addscene("main10",scene(quit,quit))
     global TITLE, HEIGHT, WIDTH
 

@@ -1,5 +1,5 @@
 from DSEngine import *
-from game import *
+from game import window,WIDTH,HEIGHT,COUNTER,SPR_SIZE
 down1 = Image2D(filename="Assets/Player/tile000.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/tile001.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/tile002.png", position=Vector2(150, 55))
