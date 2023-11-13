@@ -24,13 +24,16 @@ rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1)
 bedarea=Area2D()
 bedarea.rect=rect0.rect
 startpos = sprite.position
+computer = Image2D("Assets/computer.png",position=pygame.Vector2(96,0))
+
 
 def mainroominit():
     
     rect0.init(window)
     # text.init(window)
-    sprite.init(window)
     sprite.position=Vector2(150, 55)
+    computer.init(window)
+    sprite.init(window)
 
 def mainroom(keys):
     
@@ -58,6 +61,8 @@ def mainroom(keys):
         global COUNTER
         COUNTER+=1
         changescene("main"+str(COUNTER))
+    if sprite.is_colliding_with(computer) and keys[key_to_scancode("e")]:
+        changescene("platformer")
 
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta

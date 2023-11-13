@@ -8,5 +8,5 @@ def platformerinit():
 
 def platformer(_keys):
     if platform.tosurface()==1:
-        game.COUNTER+=1
-        changescene("main2")
+        
+        changescene("main"+str(game.COUNTER))

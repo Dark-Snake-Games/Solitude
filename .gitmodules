@@ -1,3 +1,4 @@
 [submodule "src/platformer"]
 	path = src/platformer
 	url = https://github.com/Dark-Snake-Games/Untitled-platformer
+	branch = main
