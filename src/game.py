@@ -43,7 +43,7 @@ def main():
     
     for e in range(1,10):
         addscene("main"+str(e),scene(mainroom, mainroominit))
-    addscene("main1",scene(platformer,platformerinit))
+    addscene("platformer",scene(platformer,platformerinit))
     addscene("main10",scene(quit,quit))
     global TITLE, HEIGHT, WIDTH
 
