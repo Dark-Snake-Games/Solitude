@@ -3,8 +3,11 @@ import game
 from DSEngine import *
 
 def platformerinit():
-    platform.SURFACE.init(game.window)
+    game.window.zoom=pygame.Vector2(1,1)
     platform.tosurfaceinit()
+    
+    platform.SURFACE.init(game.window)
+    
 
 def platformer(_keys):
     if platform.tosurface()==1:

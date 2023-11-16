@@ -24,16 +24,18 @@ rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1)
 bedarea=Area2D()
 bedarea.rect=rect0.rect
 startpos = sprite.position
-computer = Image2D("Assets/computer.png",position=pygame.Vector2(96,0))
-
+computer = Image2D("Assets/PcDesk_sprite.png",position=pygame.Vector2(32,0))
+room=Image2D("Assets/Room_sprite.png")
+room.area=True
 
 def mainroominit():
-    
+    room.init(window)
     rect0.init(window)
     # text.init(window)
     sprite.position=Vector2(150, 55)
     computer.init(window)
     sprite.init(window)
+    window.zoom=pygame.Vector2(2,2)
 
 def mainroom(keys):
     
@@ -76,8 +78,8 @@ def mainroom(keys):
         sprite.playing=False
     sprite.move(acc)
 
-    sprite.position.x = max(0, min(sprite.position.x, WIDTH/2 - SPR_SIZE["width"]))
-    sprite.position.y = max(0, min(sprite.position.y, HEIGHT/2 - SPR_SIZE["height"]))
+    sprite.position.x = max(0, min(sprite.position.x, WIDTH/window.zoom.x - SPR_SIZE["width"]))
+    sprite.position.y = max(0, min(sprite.position.y, HEIGHT/window.zoom.y - SPR_SIZE["height"]))
 
 
 
