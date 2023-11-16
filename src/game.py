@@ -35,7 +35,7 @@ from platformr import *
 
 
 def main():
-    
+    window.zoom=pygame.Vector2(2,2)
     setscenes( {  "main0": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()

@@ -76,8 +76,8 @@ def mainroom(keys):
         sprite.playing=False
     sprite.move(acc)
 
-    sprite.position.x = max(0, min(sprite.position.x, WIDTH - SPR_SIZE["width"]))
-    sprite.position.y = max(0, min(sprite.position.y, WIDTH - SPR_SIZE["height"]))
+    sprite.position.x = max(0, min(sprite.position.x, WIDTH/2 - SPR_SIZE["width"]))
+    sprite.position.y = max(0, min(sprite.position.y, HEIGHT/2 - SPR_SIZE["height"]))
 
 
 
