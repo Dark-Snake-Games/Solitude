@@ -6,15 +6,15 @@ from DSEngine import *
 from pygame import Vector2
 from pygame.display import update
 
-
+size_multiplyer=6
 # from random import randint
 COUNTER=0
 TITLE = "Project: Solitude"
 HEIGHT = 720
 WIDTH = 1280
 SPR_SIZE = {
-    "width": 24,
-    "height": 32
+    "width": 24*size_multiplyer,
+    "height": 32*size_multiplyer
 }
 
 window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(100, 100, 100))
@@ -35,7 +35,6 @@ from platformr import *
 
 
 def main():
-    window.zoom=pygame.Vector2(2,2)
     setscenes( {  "main0": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()

@@ -1,5 +1,7 @@
 from DSEngine import *
-from game import window,WIDTH,HEIGHT,COUNTER,SPR_SIZE
+from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE
+
+
 down1 = Image2D(filename="Assets/Player/tile000.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/tile001.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/tile002.png", position=Vector2(150, 55))
@@ -18,15 +20,18 @@ right3 = Image2D(filename="Assets/Player/tile011.png", position=Vector2(150, 55)
 right = Spritesheet(*([right2] * 12 + [right3] * 12))
 
 animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(20,32-20),offset=Vector2(6,20))
+sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
 bedsheet = AnimationSheet(default=Image2D("Assets/bed.png"), size=Vector2(64, 1))
-rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1)
+rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1,position=pygame.Vector2(0,64*size_multiplyer))
 bedarea=Area2D()
 bedarea.rect=rect0.rect
 startpos = sprite.position
-computer = Image2D("Assets/PcDesk_sprite.png",position=pygame.Vector2(32,0))
+computer = Image2D("Assets/PcDesk_sprite.png")
 room=Image2D("Assets/Room_sprite.png")
 room.area=True
+trash=Image2D("Assets/trash.png",position=Vector2(32*size_multiplyer,0))
+trash.area=True
+closet=Image2D("Assets/dresser1.png",position=Vector2(64*size_multiplyer),offset=pygame.Vector2(8*size_multiplyer,0))
 
 def mainroominit():
     room.init(window)
@@ -34,8 +39,9 @@ def mainroominit():
     # text.init(window)
     sprite.position=Vector2(150, 55)
     computer.init(window)
+    closet.init(window)
+    trash.init(window)
     sprite.init(window)
-    window.zoom=pygame.Vector2(2,2)
 
 def mainroom(keys):
     
@@ -68,7 +74,7 @@ def mainroom(keys):
 
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta
-
+    acc*=size_multiplyer
     if acc==Vector2(0,0):
         sheet_to_play=""
     if sheet_to_play !="" and (not sprite.playing or sprite.sheet_name != sheet_to_play):
