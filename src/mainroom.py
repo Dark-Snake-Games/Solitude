@@ -19,23 +19,25 @@ right2 = Image2D(filename="Assets/Player/tile010.png", position=Vector2(150, 55)
 right3 = Image2D(filename="Assets/Player/tile011.png", position=Vector2(150, 55))
 right = Spritesheet(*([right2] * 12 + [right3] * 12))
 
-animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
-bedsheet = AnimationSheet(default=Image2D("Assets/bed.png"), size=Vector2(64, 1))
-rect0 = AnimatedSprite2D(sheet=bedsheet, layer=1,position=pygame.Vector2(0,64*size_multiplyer))
-bedarea=Area2D()
-bedarea.rect=rect0.rect
-startpos = sprite.position
-computer = Image2D("Assets/PcDesk_sprite.png")
-room=Image2D("Assets/Room_sprite.png")
-room.area=True
-trash=Image2D("Assets/trash.png",position=Vector2(32*size_multiplyer,0))
-trash.area=True
-closet=Image2D("Assets/dresser1.png",position=Vector2(64*size_multiplyer),offset=pygame.Vector2(8*size_multiplyer,0))
+def load():
+    global animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet
+    animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
+    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
+    bed = Image2D("Assets/bed2.png", layer=1,position=pygame.Vector2(0,64*size_multiplyer))
+    bedarea=Area2D()
+    bedarea.rect=bed.rect
+    startpos = sprite.position
+    computer = Image2D("Assets/PcDesk_sprite.png")
+    room=Image2D("Assets/Room_sprite.png")
+    room.area=True
+    trash=Image2D("Assets/trash2.png",position=Vector2(32*size_multiplyer,0))
+    trash.area=True
+    closet=Image2D("Assets/dresser2.png",position=Vector2(64*size_multiplyer),offset=pygame.Vector2(8*size_multiplyer,0))
 
 def mainroominit():
+    load()
     room.init(window)
-    rect0.init(window)
+    bed.init(window)
     # text.init(window)
     sprite.position=Vector2(150, 55)
     computer.init(window)
@@ -43,16 +45,13 @@ def mainroominit():
     trash.init(window)
     sprite.init(window)
 
-def mainroom(keys):
+
+def movement(keys):
     
     acc = Vector2(0.0, 0.0)
 
     sheet_to_play=""
-
-    bedsheet.visible=True
-    sprite.visible=True
-    rect0.visible=True
-
+    
     if keys[key_to_scancode("d")]:
         sprite.sprites.default = right1
         sheet_to_play="right"
@@ -65,16 +64,11 @@ def mainroom(keys):
     if keys[key_to_scancode("s")]:
         sprite.sprites.default = down1
         sheet_to_play="down"
-    if sprite.is_colliding_with(bedarea) and keys[key_to_scancode("e")]:
-        global COUNTER
-        COUNTER+=1
-        changescene("main"+str(COUNTER))
-    if sprite.is_colliding_with(computer) and keys[key_to_scancode("e")]:
-        changescene("platformer")
-
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta
     acc*=size_multiplyer
+    
+    
     if acc==Vector2(0,0):
         sheet_to_play=""
     if sheet_to_play !="" and (not sprite.playing or sprite.sheet_name != sheet_to_play):
@@ -82,10 +76,40 @@ def mainroom(keys):
     elif sheet_to_play=="":
         sprite.frame=sprite.sheet_length
         sprite.playing=False
+    
+    
     sprite.move(acc)
-
+    
     sprite.position.x = max(0, min(sprite.position.x, WIDTH/window.zoom.x - SPR_SIZE["width"]))
     sprite.position.y = max(0, min(sprite.position.y, HEIGHT/window.zoom.y - SPR_SIZE["height"]))
+
+
+def interactions(keys):
+    if sprite.is_colliding_with(bedarea) and window.key_just_pressed(key_to_scancode("e")):
+        if bed.name=="Assets/bed.png":
+            global COUNTER
+            COUNTER+=1
+            changescene("main"+str(COUNTER))
+        else:
+            bed.changeimage("Assets/bed.png")
+    if sprite.is_colliding_with(computer) and keys[key_to_scancode("e")]:
+        changescene("platformer")
+
+
+def mainroom(keys):
+    
+
+    sprite.visible=True
+    bed.visible=True
+
+    movement(keys)
+    interactions(keys)
+    
+
+    
+    
+    
+    
 
 
 
