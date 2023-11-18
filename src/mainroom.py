@@ -85,20 +85,22 @@ def movement(keys):
 
 def interacts_with(thing:Rect2D):
     keys=window.pressed_keys
-    return sprite.is_colliding_with(thing) and keys[key_to_scancode("e")]
+    return sprite.is_colliding_with(thing) and window.key_just_pressed(key_to_scancode("e"))
 
 def interactions(keys):
-    if sprite.is_colliding_with(bedarea) and window.key_just_pressed(key_to_scancode("e")):
+    if interacts_with(bed):
         if bed.name=="Assets/bed.png":
             global COUNTER
             COUNTER+=1
             changescene("main"+str(COUNTER))
         else:
             bed.changeimage("Assets/bed.png")
-    if sprite.is_colliding_with(computer) and keys[key_to_scancode("e")]:
+    if interacts_with(computer):
         changescene("platformer")
     if interacts_with(closet):
         closet.changeimage("Assets/dresser1.png")
+    if interacts_with(trash):
+        trash.changeimage("Assets/trash.png")
 
 
 def mainroom(keys):
