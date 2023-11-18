@@ -83,6 +83,9 @@ def movement(keys):
     sprite.position.x = max(0, min(sprite.position.x, WIDTH/window.zoom.x - SPR_SIZE["width"]))
     sprite.position.y = max(0, min(sprite.position.y, HEIGHT/window.zoom.y - SPR_SIZE["height"]))
 
+def interacts_with(thing:Rect2D):
+    keys=window.pressed_keys
+    return sprite.is_colliding_with(thing) and keys[key_to_scancode("e")]
 
 def interactions(keys):
     if sprite.is_colliding_with(bedarea) and window.key_just_pressed(key_to_scancode("e")):
@@ -94,6 +97,8 @@ def interactions(keys):
             bed.changeimage("Assets/bed.png")
     if sprite.is_colliding_with(computer) and keys[key_to_scancode("e")]:
         changescene("platformer")
+    if interacts_with(closet):
+        closet.changeimage("Assets/dresser1.png")
 
 
 def mainroom(keys):
