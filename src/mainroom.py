@@ -2,22 +2,22 @@ from DSEngine import *
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE
 
 
-down1 = Image2D(filename="Assets/Player/tile000.png", position=Vector2(150, 55))
-down2 = Image2D(filename="Assets/Player/tile001.png", position=Vector2(150, 55))
-down3 = Image2D(filename="Assets/Player/tile002.png", position=Vector2(150, 55))
+down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
+down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
+down3 = Image2D(filename="Assets/Player/Ana_sprite3.png", position=Vector2(150, 55))
 down = Spritesheet(*([down2] * 12 + [down3] * 12))
-up1 = Image2D(filename="Assets/Player/tile003.png", position=Vector2(150, 55))
-up2 = Image2D(filename="Assets/Player/tile004.png", position=Vector2(150, 55))
-up3 = Image2D(filename="Assets/Player/tile005.png", position=Vector2(150, 55))
+up1 = Image2D(filename="Assets/Player/Ana_sprite4.png", position=Vector2(150, 55))
+up2 = Image2D(filename="Assets/Player/Ana_sprite5.png", position=Vector2(150, 55))
+up3 = Image2D(filename="Assets/Player/Ana_sprite6.png", position=Vector2(150, 55))
 up = Spritesheet(*([up2] * 12 + [up3] * 12))
-left1 = Image2D(filename="Assets/Player/tile006.png", position=Vector2(150, 55))
-left2 = Image2D(filename="Assets/Player/tile007.png", position=Vector2(150, 55))
-left3 = Image2D(filename="Assets/Player/tile008.png", position=Vector2(150, 55))
-left = Spritesheet(*([left2] * 12 + [left3] * 12))
-right1 = Image2D(filename="Assets/Player/tile009.png", position=Vector2(150, 55))
-right2 = Image2D(filename="Assets/Player/tile010.png", position=Vector2(150, 55))
-right3 = Image2D(filename="Assets/Player/tile011.png", position=Vector2(150, 55))
+right1 = Image2D(filename="Assets/Player/Ana_sprite7.png", position=Vector2(150, 55))
+right2 = Image2D(filename="Assets/Player/Ana_sprite8.png", position=Vector2(150, 55))
+right3 = Image2D(filename="Assets/Player/Ana_sprite9.png", position=Vector2(150, 55))
 right = Spritesheet(*([right2] * 12 + [right3] * 12))
+left1 = Image2D(filename="Assets/Player/Ana_sprite10.png", position=Vector2(150, 55))
+left2 = Image2D(filename="Assets/Player/Ana_sprite11.png", position=Vector2(150, 55))
+left3 = Image2D(filename="Assets/Player/Ana_sprite12.png", position=Vector2(150, 55))
+left = Spritesheet(*([left2] * 12 + [left3] * 12))
 
 def load():
     global animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet
