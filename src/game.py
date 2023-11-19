@@ -6,7 +6,7 @@ from DSEngine import *
 from pygame import Vector2
 from pygame.display import update
 
-size_multiplyer=6
+size_multiplyer=7.5
 # from random import randint
 COUNTER=0
 TITLE = "Project: Solitude"
@@ -17,7 +17,7 @@ SPR_SIZE = {
     "height": 32*size_multiplyer
 }
 
-window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(100, 100, 100))
+window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(0, 0, 0))
 audio_man = AudioManager()
 #import scenes here 
 from mainroom import *
