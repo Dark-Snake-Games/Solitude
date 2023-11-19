@@ -1,6 +1,6 @@
 from DSEngine import *
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE
-
+from copy import deepcopy
 
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
@@ -18,32 +18,64 @@ left1 = Image2D(filename="Assets/Player/Ana_sprite10.png", position=Vector2(150,
 left2 = Image2D(filename="Assets/Player/Ana_sprite11.png", position=Vector2(150, 55))
 left3 = Image2D(filename="Assets/Player/Ana_sprite12.png", position=Vector2(150, 55))
 left = Spritesheet(*([left2] * 12 + [left3] * 12))
+middle=Vector2(WIDTH/2-720/2,0)
 
+class Tasklist:
+    def __init__(self,window) -> None:
+        self.tasks=[]
+        self.window=window
+        pass
+    def update(self):
+        for e in range(len(self.tasks)):
+            pos=0
+            for e in range(e):
+                pos+=self.tasks[e].color_rect.height
+            self.tasks[e].position.y=pos
+    def addtask(self,str):
+        task=Text2D(str,position=pygame.Vector2(0,0))
+        self.tasks.append(task)
+        task.init(self.window)
+        self.update()
+    def remove(self,str):
+        task=None
+        for e in self.tasks:
+            if e.text==str:
+                task=e
+        if task!=None:
+            task.remove(self.window)
+            self.tasks.remove(task)
+            self.update()
+        
 def load():
-    global animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet
+    global animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
+    tasklist=Tasklist(window)
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
-    bed = Image2D("Assets/bed2.png", layer=1,position=pygame.Vector2(0,64*size_multiplyer))
+    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
+    bed = Image2D("Assets/bed2.png", layer=1,position=middle+Vector2(0,64*size_multiplyer))
     bedarea=Area2D()
     bedarea.rect=bed.rect
     startpos = sprite.position
-    computer = Image2D("Assets/PcDesk_sprite.png")
-    room=Image2D("Assets/Room_sprite.png")
+    computer = Image2D("Assets/PcDesk_sprite.png",position=middle)
+    room=Image2D("Assets/Room_sprite.png",position=middle)
     room.area=True
-    trash=Image2D("Assets/trash2.png",position=Vector2(32*size_multiplyer,0))
+    room.debug=False
+    trash=Image2D("Assets/trash2.png",position=middle+Vector2(32*size_multiplyer,0))
     trash.area=True
-    closet=Image2D("Assets/dresser2.png",position=Vector2(64*size_multiplyer),offset=pygame.Vector2(8*size_multiplyer,0))
+    closet=Image2D("Assets/dresser2.png",position=middle+Vector2(64*size_multiplyer),offset=Vector2(8*size_multiplyer,0))
 
 def mainroominit():
     load()
+    tasklist.addtask("bed")
+    tasklist.addtask("closet")
+    tasklist.addtask("trash")
     room.init(window)
     bed.init(window)
     # text.init(window)
-    sprite.position=Vector2(150, 55)
+    sprite.position=middle+Vector2(150, 55)
     computer.init(window)
     closet.init(window)
     trash.init(window)
-    sprite.init(window)
+    sprite.init(window) 
 
 
 def movement(keys):
@@ -95,12 +127,16 @@ def interactions(keys):
             changescene("main"+str(COUNTER))
         else:
             bed.changeimage("Assets/bed.png")
+            tasklist.remove("bed")
     if interacts_with(computer):
         changescene("platformer")
+        
     if interacts_with(closet):
         closet.changeimage("Assets/dresser1.png")
+        tasklist.remove("closet")
     if interacts_with(trash):
         trash.changeimage("Assets/trash.png")
+        tasklist.remove("trash")
 
 
 def mainroom(keys):
