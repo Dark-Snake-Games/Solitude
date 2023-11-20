@@ -3,7 +3,6 @@ The main game file. This contains the room and all assets and processes.
 """
 
 from DSEngine import *
-from pygame import Vector2
 from pygame.display import update
 
 size_multiplyer=7.5
@@ -23,6 +22,7 @@ audio_man = AudioManager()
 from mainroom import *
 from test import *
 from platformr import *
+import pc
 # text = Text2D("Hello World", position=Vector2(550, 335))
 
 
@@ -44,6 +44,7 @@ def main():
         addscene("main"+str(e),scene(mainroom, mainroominit))
     addscene("platformer",scene(platformer,platformerinit))
     addscene("main10",scene(quit,quit))
+    addscene("pc",scene(pc.frame,pc.init))
     global TITLE, HEIGHT, WIDTH
 
     while window.running:

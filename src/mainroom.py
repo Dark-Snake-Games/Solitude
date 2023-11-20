@@ -47,7 +47,7 @@ class Tasklist:
             self.update()
         
 def load():
-    global animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
+    global left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
     tasklist=Tasklist(window)
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
     sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
@@ -62,7 +62,12 @@ def load():
     trash=Image2D("Assets/trash2.png",position=middle+Vector2(32*size_multiplyer,0))
     trash.area=True
     closet=Image2D("Assets/dresser2.png",position=middle+Vector2(64*size_multiplyer),offset=Vector2(8*size_multiplyer,0))
-
+    daycounter=Text2D("Day 1")
+    daycounter.position=pygame.Vector2(WIDTH,HEIGHT)-pygame.Vector2(daycounter.color_rect.width,daycounter.color_rect.height)
+    print(daycounter.position)
+    left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
+    right_wall=Rect2D(position=pygame.Vector2(middle.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
+    left_wall.visible,right_wall.visible=False,False
 def mainroominit():
     load()
     tasklist.addtask("bed")
@@ -75,7 +80,10 @@ def mainroominit():
     computer.init(window)
     closet.init(window)
     trash.init(window)
-    sprite.init(window) 
+    sprite.init(window)
+    daycounter.init(window)
+    left_wall.init(window)
+    right_wall.init(window)
 
 
 def movement(keys):
@@ -129,7 +137,7 @@ def interactions(keys):
             bed.changeimage("Assets/bed.png")
             tasklist.remove("bed")
     if interacts_with(computer):
-        changescene("platformer")
+        changescene("pc")
         
     if interacts_with(closet):
         closet.changeimage("Assets/dresser1.png")
