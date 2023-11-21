@@ -1,6 +1,6 @@
 from DSEngine import *
+from DSEngine.etypes import Window
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE
-from copy import deepcopy
 
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
@@ -21,20 +21,24 @@ left = Spritesheet(*([left2] * 12 + [left3] * 12))
 middle=Vector2(WIDTH/2-720/2,0)
 
 class Tasklist:
-    def __init__(self,window) -> None:
+    def __init__(self) -> None:
         self.tasks=[]
-        self.window=window
+        self.window=None
         pass
     def update(self):
-        for e in range(len(self.tasks)):
-            pos=0
-            for e in range(e):
-                pos+=self.tasks[e].color_rect.height
-            self.tasks[e].position.y=pos
+        if self.window!=None:
+            for e in range(len(self.tasks)):
+                pos=0
+                for e in range(e):
+                    pos+=self.tasks[e].color_rect.height
+                task=self.tasks[e]
+                task.position.y=pos
+                if not task in window.layers[task.layer]:
+                    task.init(self.window)
     def addtask(self,str):
         task=Text2D(str,position=pygame.Vector2(0,0))
         self.tasks.append(task)
-        task.init(self.window)
+        
         self.update()
     def remove(self,str):
         task=None
@@ -42,13 +46,40 @@ class Tasklist:
             if e.text==str:
                 task=e
         if task!=None:
-            task.remove(self.window)
+            if task in window.layers[task.layer]:
+                task.remove(self.window)
             self.tasks.remove(task)
             self.update()
+    def init(self,window):
+        self.window=window
+        for e in self.tasks:
+            e.init(self.window)
+        self.update()
+
+
+
+class Speech(Text2D):
+    def __init__(self,text,window) -> None:
+        super().__init__(text)
+        self.window=window
+        self.position=pygame.Vector2(WIDTH,HEIGHT)/2-pygame.Vector2(self.color_rect.size)/2+pygame.Vector2(0,200)
+        self.init(window)
+    def render(self, window: Window):
+        super().render(window)
+        self.position.y-=0.5
+        self.text_surface.set_alpha((self.position.y-HEIGHT/2)/200*255)
+        if self.text_surface!=None and self.text_surface.get_alpha()<=0:
+            self.remove(self.window)
         
+        
+
+
+
+
+
 def load():
     global left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
-    tasklist=Tasklist(window)
+    tasklist=Tasklist()
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
     sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
     bed = Image2D("Assets/bed2.png", layer=1,position=middle+Vector2(0,64*size_multiplyer))
@@ -68,11 +99,14 @@ def load():
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     right_wall=Rect2D(position=pygame.Vector2(middle.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     left_wall.visible,right_wall.visible=False,False
-def mainroominit():
-    load()
     tasklist.addtask("bed")
     tasklist.addtask("closet")
     tasklist.addtask("trash")
+    
+load()
+def mainroominit():
+    
+    tasklist.init(window)
     room.init(window)
     bed.init(window)
     # text.init(window)
@@ -136,15 +170,18 @@ def interactions(keys):
         else:
             bed.changeimage("Assets/bed.png")
             tasklist.remove("bed")
+            Speech("First step to a clean room, first step to a clean mind.",window)
     if interacts_with(computer):
         changescene("pc")
         
     if interacts_with(closet):
         closet.changeimage("Assets/dresser1.png")
         tasklist.remove("closet")
+        Speech("It’s better to keep these put away.",window)
     if interacts_with(trash):
         trash.changeimage("Assets/trash.png")
         tasklist.remove("trash")
+        Speech("Phew, I need to stop leaving these around.",window)
 
 
 def mainroom(keys):
