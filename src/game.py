@@ -7,7 +7,11 @@ from pygame.display import update
 
 size_multiplyer=7.5
 # from random import randint
-COUNTER=0
+class counterobject:
+    def __init__(self,num) -> None:
+        self.num=num
+        pass
+COUNTER=counterobject(0)
 TITLE = "Project: Solitude"
 HEIGHT = 720
 WIDTH = 1280
@@ -20,7 +24,14 @@ window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(0, 0, 0))
 audio_man = AudioManager()
 removetask=[]
 #import scenes here 
-from mainroom import *
+import day1
+import day2
+import day3
+import day5
+import day9
+import day16
+import day23
+import dayIDK
 from test import *
 from platformr import *
 import pc
@@ -36,13 +47,15 @@ import pc
 
 
 def main():
-    setscenes( {  "main0": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
+    setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
+    days=[day1,day2,day3,day5,day9,day16,day23,dayIDK]
+    for e in range(len(days)):
+        addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
     changescene("main0")
     
-    for e in range(1,10):
-        addscene("main"+str(e),scene(mainroom, mainroominit))
+    
     addscene("platformer",scene(platformer,platformerinit))
     addscene("main10",scene(quit,quit))
     addscene("pc",scene(pc.frame,pc.init))

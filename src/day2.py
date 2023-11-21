@@ -2,6 +2,12 @@ from DSEngine import *
 from DSEngine.etypes import Window
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask
 
+day=2
+bedspeak=""
+dresserspeak=""
+trashspeak=""
+doorspeak=""
+
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/Ana_sprite3.png", position=Vector2(150, 55))
@@ -30,7 +36,6 @@ class Tasklist:
             self.remove(e)
             if e in removetask:removetask.remove(e)
         if self.window!=None:
-            print(1,self.tasks)
             for e in range(len(self.tasks)):
                 pos=0
                 for i in range(e):
@@ -39,7 +44,6 @@ class Tasklist:
                 task.position.y=pos
                 if not task in window.layers[task.layer]:
                     task.init(self.window)
-            print(self.tasks)
     def addtask(self,str):
         task=Text2D(str,position=pygame.Vector2(0,0))
         self.tasks.append(task)
@@ -83,7 +87,7 @@ class Speech(Text2D):
 
 
 def load():
-    global left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
+    global door,left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
     tasklist=Tasklist()
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
     sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
@@ -93,14 +97,16 @@ def load():
     startpos = sprite.position
     computer = Image2D("Assets/PcDesk_sprite.png",position=middle)
     room=Image2D("Assets/Room_sprite.png",position=middle)
+    door=Area2D(position=pygame.Vector2(0,64*size_multiplyer),size=pygame.Vector2(32*size_multiplyer))
+    
     room.area=True
     room.debug=False
     trash=Image2D("Assets/trash2.png",position=middle+Vector2(32*size_multiplyer,0))
     trash.area=True
     closet=Image2D("Assets/dresser2.png",position=middle+Vector2(64*size_multiplyer),offset=Vector2(8*size_multiplyer,0))
-    daycounter=Text2D("Day 1")
+    daycounter=Text2D("Day "+str(day))
     daycounter.position=pygame.Vector2(WIDTH,HEIGHT)-pygame.Vector2(daycounter.color_rect.width,daycounter.color_rect.height)
-    print(daycounter.position)
+    
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     right_wall=Rect2D(position=pygame.Vector2(middle.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     left_wall.visible,right_wall.visible=False,False
@@ -127,7 +133,6 @@ def mainroominit():
 
 
 def movement(keys):
-    tasklist.update()
     acc = Vector2(0.0, 0.0)
 
     sheet_to_play=""
@@ -171,23 +176,25 @@ def interactions(keys):
     if interacts_with(bed):
         if bed.name=="Assets/bed.png":
             global COUNTER
-            COUNTER+=1
-            changescene("main"+str(COUNTER))
+            COUNTER.num+=1
+            changescene("main"+str(COUNTER.num))
         else:
             bed.changeimage("Assets/bed.png")
             tasklist.remove("bed")
-            Speech("First step to a clean room, first step to a clean mind.",window)
+            Speech(bedspeak,window)
     if interacts_with(computer):
         changescene("pc")
+    if interacts_with(door):
+        Speech(doorspeak,window)
         
     if interacts_with(closet):
         closet.changeimage("Assets/dresser1.png")
         tasklist.remove("closet")
-        Speech("It’s better to keep these put away.",window)
+        Speech(dresserspeak,window)
     if interacts_with(trash):
         trash.changeimage("Assets/trash.png")
         tasklist.remove("trash")
-        Speech("Phew, I need to stop leaving these around.",window)
+        Speech(trashspeak,window)
 
 
 def mainroom(keys):

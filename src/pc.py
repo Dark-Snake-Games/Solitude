@@ -10,6 +10,6 @@ def init():
     print(game.window.layers)
 def frame(keys):
     if game.window.key_just_pressed(key_to_scancode("q")):
-        changescene("main"+str(game.COUNTER))
+        changescene("main"+str(game.COUNTER.num))
     if gamebutton.pressed:
         changescene("platformer")
