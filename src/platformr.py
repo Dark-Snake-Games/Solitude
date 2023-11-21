@@ -12,4 +12,4 @@ def platformerinit():
 def platformer(_keys):
     if platform.tosurface()==1:
         
-        changescene("main"+str(game.COUNTER))
+        changescene("pc")

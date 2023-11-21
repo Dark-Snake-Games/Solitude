@@ -9,7 +9,7 @@ def init():
     gamebutton.init(game.window)
     print(game.window.layers)
 def frame(keys):
-    if keys[key_to_scancode("q")]:
+    if game.window.key_just_pressed(key_to_scancode("q")):
         changescene("main"+str(game.COUNTER))
     if gamebutton.pressed:
         changescene("platformer")
