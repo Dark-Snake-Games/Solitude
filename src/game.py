@@ -18,6 +18,7 @@ SPR_SIZE = {
 
 window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(0, 0, 0))
 audio_man = AudioManager()
+removetask=[]
 #import scenes here 
 from mainroom import *
 from test import *

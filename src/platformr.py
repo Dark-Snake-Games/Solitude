@@ -11,5 +11,5 @@ def platformerinit():
 
 def platformer(_keys):
     if platform.tosurface()==1:
-        
+        game.removetask.append("game")
         changescene("pc")

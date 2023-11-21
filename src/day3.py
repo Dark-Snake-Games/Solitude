@@ -30,6 +30,7 @@ class Tasklist:
             self.remove(e)
             if e in removetask:removetask.remove(e)
         if self.window!=None:
+            print(1,self.tasks)
             for e in range(len(self.tasks)):
                 pos=0
                 for i in range(e):
@@ -38,6 +39,7 @@ class Tasklist:
                 task.position.y=pos
                 if not task in window.layers[task.layer]:
                     task.init(self.window)
+            print(self.tasks)
     def addtask(self,str):
         task=Text2D(str,position=pygame.Vector2(0,0))
         self.tasks.append(task)
@@ -98,7 +100,7 @@ def load():
     closet=Image2D("Assets/dresser2.png",position=middle+Vector2(64*size_multiplyer),offset=Vector2(8*size_multiplyer,0))
     daycounter=Text2D("Day 1")
     daycounter.position=pygame.Vector2(WIDTH,HEIGHT)-pygame.Vector2(daycounter.color_rect.width,daycounter.color_rect.height)
-    
+    print(daycounter.position)
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     right_wall=Rect2D(position=pygame.Vector2(middle.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     left_wall.visible,right_wall.visible=False,False
@@ -125,6 +127,7 @@ def mainroominit():
 
 
 def movement(keys):
+    tasklist.update()
     acc = Vector2(0.0, 0.0)
 
     sheet_to_play=""
