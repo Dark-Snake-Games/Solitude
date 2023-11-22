@@ -1,12 +1,12 @@
 from DSEngine import *
 from DSEngine.etypes import Window
-from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask
+from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
 
-day=2
-bedspeak=""
-dresserspeak=""
-trashspeak=""
-doorspeak=""
+day=1
+bedspeak="bed"
+dresserspeak="dresser"
+trashspeak="trash"
+doorspeak="door"
 
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
@@ -26,59 +26,11 @@ left3 = Image2D(filename="Assets/Player/Ana_sprite12.png", position=Vector2(150,
 left = Spritesheet(*([left2] * 12 + [left3] * 12))
 middle=Vector2(WIDTH/2-720/2,0)
 
-class Tasklist:
-    def __init__(self) -> None:
-        self.tasks=[]
-        self.window=None
-        pass
-    def update(self):
-        for e in removetask:
-            self.remove(e)
-            if e in removetask:removetask.remove(e)
-        if self.window!=None:
-            for e in range(len(self.tasks)):
-                pos=0
-                for i in range(e):
-                    pos+=self.tasks[i].color_rect.height
-                task=self.tasks[e]
-                task.position.y=pos
-                if not task in window.layers[task.layer]:
-                    task.init(self.window)
-    def addtask(self,str):
-        task=Text2D(str,position=pygame.Vector2(0,0))
-        self.tasks.append(task)
-        
-        self.update()
-    def remove(self,str):
-        task=None
-        for e in self.tasks:
-            if e.text==str:
-                task=e
-        if task!=None:
-            if task in window.layers[task.layer]:
-                task.remove(self.window)
-            self.tasks.remove(task)
-            self.update()
-    def init(self,window):
-        self.window=window
-        for e in self.tasks:
-            e.init(self.window)
-        self.update()
 
 
 
-class Speech(Text2D):
-    def __init__(self,text,window) -> None:
-        super().__init__(text)
-        self.window=window
-        self.position=pygame.Vector2(WIDTH,HEIGHT)/2-pygame.Vector2(self.color_rect.size)/2+pygame.Vector2(0,200)
-        self.init(window)
-    def render(self, window: Window):
-        super().render(window)
-        self.position.y-=0.5
-        self.text_surface.set_alpha((self.position.y-HEIGHT/2)/200*255)
-        if self.text_surface!=None and self.text_surface.get_alpha()<=0:
-            self.remove(self.window)
+
+
         
         
 
@@ -104,7 +56,7 @@ def load():
     trash=Image2D("Assets/trash2.png",position=middle+Vector2(32*size_multiplyer,0))
     trash.area=True
     closet=Image2D("Assets/dresser2.png",position=middle+Vector2(64*size_multiplyer),offset=Vector2(8*size_multiplyer,0))
-    daycounter=Text2D("Day "+str(day))
+    daycounter=Text2D("Day "+str(day),font=pygame.font.Font("munro.ttf",40))
     daycounter.position=pygame.Vector2(WIDTH,HEIGHT)-pygame.Vector2(daycounter.color_rect.width,daycounter.color_rect.height)
     
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
