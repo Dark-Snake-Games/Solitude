@@ -26,9 +26,10 @@ removetask=[]
 
 
 class Tasklist:
-    def __init__(self) -> None:
+    def __init__(self,position=Vector2(0,0)) -> None:
         self.tasks=[]
         self.window=None
+        self.position=position
         pass
     def update(self):
         for e in removetask:
@@ -40,7 +41,7 @@ class Tasklist:
                 for i in range(e):
                     pos+=self.tasks[i].color_rect.height
                 task=self.tasks[e]
-                task.position.y=pos
+                task.position=self.position+Vector2(0,pos)
                 if not task in window.layers[task.layer]:
                     task.init(self.window)
     def addtask(self,str):
