@@ -7,7 +7,11 @@ from pygame.display import update
 
 size_multiplyer=7.5
 # from random import randint
-COUNTER=0
+class counterobject:
+    def __init__(self,num) -> None:
+        self.num=num
+        pass
+COUNTER=counterobject(0)
 TITLE = "Project: Solitude"
 HEIGHT = 720
 WIDTH = 1280
@@ -18,8 +22,71 @@ SPR_SIZE = {
 
 window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(0, 0, 0))
 audio_man = AudioManager()
+removetask=[]
+
+
+class Tasklist:
+    def __init__(self,position=Vector2(0,0)) -> None:
+        self.tasks=[]
+        self.window=None
+        self.position=position
+        pass
+    def update(self):
+        for e in removetask:
+            self.remove(e)
+            if e in removetask:removetask.remove(e)
+        if self.window!=None:
+            for e in range(len(self.tasks)):
+                pos=0
+                for i in range(e):
+                    pos+=self.tasks[i].color_rect.height
+                task=self.tasks[e]
+                task.position=self.position+Vector2(0,pos)
+                if not task in window.layers[task.layer]:
+                    task.init(self.window)
+    def addtask(self,str):
+        task=Text2D(str,position=pygame.Vector2(0,0),font=pygame.font.Font("munro.ttf",40))
+        self.tasks.append(task)
+        
+        self.update()
+    def remove(self,str):
+        task=None
+        for e in self.tasks:
+            if e.text==str:
+                task=e
+        if task!=None:
+            if task in window.layers[task.layer]:
+                task.remove(self.window)
+            self.tasks.remove(task)
+            self.update()
+    def init(self,window):
+        self.window=window
+        for e in self.tasks:
+            e.init(self.window)
+        self.update()
+
+class Speech(Text2D):
+    def __init__(self,text,window) -> None:
+        super().__init__(text,font=pygame.font.Font("munro.ttf",40))
+        self.window=window
+        self.position=pygame.Vector2(WIDTH,HEIGHT)/2-pygame.Vector2(self.color_rect.size)/2+pygame.Vector2(0,200)
+        self.init(window)
+    def render(self, window: Window):
+        super().render(window)
+        self.position.y-=0.5
+        self.text_surface.set_alpha((self.position.y-HEIGHT/2)/200*255)
+        if self.text_surface!=None and self.text_surface.get_alpha()<=0:
+            self.remove(self.window)
+
 #import scenes here 
-from mainroom import *
+import day1
+import day2
+import day3
+import day5
+import day9
+import day16
+import day23
+import dayIDK
 from test import *
 from platformr import *
 import pc
@@ -33,15 +100,16 @@ import pc
 
 
 
-
+days=[day1,day2,day3,day5,day9,day16,day23,dayIDK]
 def main():
-    setscenes( {  "main0": scene(mainroom, mainroominit),    "scenetest": scene(test, testinit)})
+    setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
+    for e in range(len(days)):
+        addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
     changescene("main0")
     
-    for e in range(1,10):
-        addscene("main"+str(e),scene(mainroom, mainroominit))
+    
     addscene("platformer",scene(platformer,platformerinit))
     addscene("main10",scene(quit,quit))
     addscene("pc",scene(pc.frame,pc.init))
