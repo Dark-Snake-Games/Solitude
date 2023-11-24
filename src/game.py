@@ -49,7 +49,7 @@ class Tasklist:
         self.tasks.append(task)
         
         self.update()
-    def remove(self,str):
+    def remove(self,str:str):
         task=None
         for e in self.tasks:
             if e.text==str:
@@ -59,6 +59,9 @@ class Tasklist:
                 task.remove(self.window)
             self.tasks.remove(task)
             self.update()
+    def removelist(self,window:Window):
+        for e in self.tasks:
+            e.remove(window)
     def init(self,window):
         self.window=window
         for e in self.tasks:
