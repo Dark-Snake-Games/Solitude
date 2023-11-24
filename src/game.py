@@ -49,7 +49,7 @@ class Tasklist:
         self.tasks.append(task)
         
         self.update()
-    def remove(self,str):
+    def remove(self,str:str):
         task=None
         for e in self.tasks:
             if e.text==str:
@@ -59,6 +59,10 @@ class Tasklist:
                 task.remove(self.window)
             self.tasks.remove(task)
             self.update()
+    def removelist(self,window:Window):
+        for e in self.tasks:
+            e.remove(window)
+        self.window=None
     def init(self,window):
         self.window=window
         for e in self.tasks:
@@ -78,6 +82,8 @@ class Speech(Text2D):
         if self.text_surface!=None and self.text_surface.get_alpha()<=0:
             self.remove(self.window)
 
+
+
 #import scenes here 
 import day1
 import day2
@@ -89,6 +95,9 @@ import day23
 import dayIDK
 from test import *
 from platformr import *
+
+days=[day1,day2,day3,day5,day9,day16,day23,dayIDK]
+
 import pc
 # text = Text2D("Hello World", position=Vector2(550, 335))
 
@@ -100,7 +109,7 @@ import pc
 
 
 
-days=[day1,day2,day3,day5,day9,day16,day23,dayIDK]
+
 def main():
     setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
