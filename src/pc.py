@@ -24,8 +24,8 @@ chaoschat.tasks=[Text2D("wewew")]
 closechaosbutton=Button(" ",position=chaoswindow.position,size=Vector2(7.5*9,7.5*7))
 closechaosbutton.visible=False
 chaossendbutton=Button("",position=Vector2(chaoswindow.position+Vector2(0,chaoswindow.rect.height))-Vector2(0,8*7.5),size=Vector2(chaoswindow.rect.width,8*7.5))
-chaossendbutton.visible=False
-scroll=0
+
+
 def init():
     global scroll,anachat
     
