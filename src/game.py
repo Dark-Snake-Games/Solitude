@@ -15,7 +15,7 @@ class counterobject:
     def __init__(self,num) -> None:
         self.num=num
         pass
-COUNTER=counterobject(1)
+COUNTER=counterobject(0)
 TITLE = "Project: Solitude"
 HEIGHT = 720
 WIDTH = 1280
@@ -43,7 +43,10 @@ class Tasklist:
             for e in range(len(self.tasks)):
                 pos=0
                 for i in range(e):
-                    pos+=self.tasks[i].color_rect.height
+                    if type(self.tasks[i])==Text2D:
+                        pos+=self.tasks[i].color_rect.height
+                    elif type(self.tasks[i]) == Image2D:
+                        pos+=self.tasks[i].rect.height
                 task=self.tasks[e]
                 task.position=self.position+Vector2(0,pos)
                 if not task in window.layers[task.layer]:
@@ -118,10 +121,10 @@ def main():
     setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
-    #for e in range(len(days)):
-    e = 1
-    addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
-    changescene("main1")
+    for e in range(len(days)):
+    # e = 1
+        addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
+    changescene("main0")
     
     
     addscene("platformer",scene(platformer,platformerinit))

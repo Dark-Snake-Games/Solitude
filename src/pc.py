@@ -27,7 +27,7 @@ chaossendbutton=Button("",position=Vector2(chaoswindow.position+Vector2(0,chaosw
 
 
 def init():
-    global scroll,anachat
+    global scroll,anachat,chats
     
     anachat=False
     scroll=0
@@ -42,11 +42,16 @@ def init():
     daytext.text="DAY"+str(game.days[game.COUNTER.num].day)
     daytext.update()
     daytext.init(game.window)
-    for e in chats:
-        chats.remove(e)
+    # for e in chats:
+    #     chats.remove(e)
+    chats=[]
     for e in game.days[game.COUNTER.num].chat:
-        chats.append(Text2D(e,color=(0,0,0),font=pygame.font.Font("munro.ttf",size=80)))
-    
+        if  "<img>" in e:
+            imagepath=e.replace("<img>","")
+            image=Image2D(imagepath,2)
+            image.debug=False
+            chats.append(image)
+        else:chats.append(Text2D(e,color=(0,0,0),font=pygame.font.Font("munro.ttf",size=80)))
     
 def frame(keys):
     global scroll,anachat
@@ -91,5 +96,5 @@ def frame(keys):
     chaoschat.tasks=chats[scroll:scroll2]
     chaoschat.update()
     for e in chats:
-        if not e in chaoschat.tasks and e in game.window.layers["GUI"]:
+        if not e in chaoschat.tasks and e in game.window.layers[e.layer]:
             e.remove(game.window)
