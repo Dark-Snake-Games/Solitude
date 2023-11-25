@@ -4,6 +4,10 @@ The main game file. This contains the room and all assets and processes.
 
 from DSEngine import *
 from pygame.display import update
+#from os import chdir
+from subprocess import run
+#run(['cd', 'src/'])
+#chdir("src")
 
 size_multiplyer=7.5
 # from random import randint

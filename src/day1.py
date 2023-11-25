@@ -3,10 +3,10 @@ from DSEngine.etypes import Window
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
 
 day=1
-bedspeak="bed"
-dresserspeak="dresser"
-trashspeak="trash"
-doorspeak="door"
+bedspeak="First step to a clean room, first step to a clean mind."
+dresserspeak="It's better to keep these put away."
+trashspeak="Phew, I need to stop leaving these around."
+doorspeak="It's locked."
 chat=["OutbackAddy:","Anaaaa I just","landed in town!!"," ","We should meet up","sometime its been","forever"," ","I can show you pics","of the trip from"," Australia??"]
 anachat="sounds cool"
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
@@ -158,12 +158,3 @@ def mainroom(keys):
 
     movement(keys)
     interactions(keys)
-    
-
-    
-    
-    
-    
-
-
-
