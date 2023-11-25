@@ -3,12 +3,12 @@ from DSEngine.etypes import Window
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
 
 day=1
-bedspeak="bed"
-dresserspeak="dresser"
-trashspeak="trash"
-doorspeak="door"
-chat=["OutbackAddy:","Anaaaa I just","landed in town!!"," ","We should meet up","sometime its been","forever"," ","I can show you pics","of the trip from"," Australia??"]
-anachat="sounds cool"
+bedspeak="Might as well keep it tidy."
+dresserspeak="A pain, but it needs to get done."
+trashspeak="This stuff just keeps piling up."
+doorspeak="It's locked..."
+chat=["OutbackAddy:","OutbackAddy ", "sent an image", " ","Isn't the view","from there ","so pretty???","","I thought you'd"," like it :D"," ","Have you been","doing okay?"]
+anachat="yea im ok"
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/Ana_sprite3.png", position=Vector2(150, 55))

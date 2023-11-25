@@ -15,7 +15,7 @@ class counterobject:
     def __init__(self,num) -> None:
         self.num=num
         pass
-COUNTER=counterobject(0)
+COUNTER=counterobject(1)
 TITLE = "Project: Solitude"
 HEIGHT = 720
 WIDTH = 1280
@@ -118,9 +118,10 @@ def main():
     setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
-    for e in range(len(days)):
-        addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
-    changescene("main0")
+    #for e in range(len(days)):
+    e = 1
+    addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
+    changescene("main1")
     
     
     addscene("platformer",scene(platformer,platformerinit))
