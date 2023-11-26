@@ -51,20 +51,32 @@ def init():
             image=Image2D("Assets/"+imagepath,2)
             image.debug=False
             chats.append(image)
-        else:chats.append(Text2D(e,color=(0,0,0),font=pygame.font.Font("munro.ttf",size=60)))
+        else:chats.append(Text2D(e,color=(0x14,0x0e,0x43),font=pygame.font.Font("munro.ttf",size=60)))
     
 def frame(keys):
     global scroll,anachat
     if powerbutton.pressed:
+        if chaoswindow in game.window.layers[1]:
+            chaoschat.removelist(game.window)
+            chaoswindow.remove(game.window)
+            closechaosbutton.remove(game.window)
+            chaossendbutton.remove(game.window)
+            closechaosbutton.pressed=False
+            for e in chats:
+                if e in game.window.layers["GUI"]:
+                    e.remove(game.window)
         changescene("main"+str(game.COUNTER.num))
+
+    
     if gamebutton.pressed or gameicon.pressed:
         changescene("platformer")
+    
     if chaosbutton.pressed and not chaoswindow in game.window.layers[1]:
         chaoschat.init(game.window)
         chaoswindow.init(game.window)
         closechaosbutton.init(game.window)
         chaossendbutton.init(game.window)
-        print("addchaos")
+    
     if closechaosbutton.pressed and chaoswindow in game.window.layers[1]:
         chaoschat.removelist(game.window)
         chaoswindow.remove(game.window)
@@ -74,6 +86,7 @@ def frame(keys):
         for e in chats:
             if e in game.window.layers["GUI"]:
                 e.remove(game.window)
+    
     if chaossendbutton.pressed:
         if not anachat:
             anachat=True
