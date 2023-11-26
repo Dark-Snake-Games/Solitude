@@ -36,9 +36,7 @@ class Tasklist:
         self.position=position
         pass
     def update(self):
-        for e in removetask:
-            self.remove(e)
-            if e in removetask:removetask.remove(e)
+        
         if self.window!=None:
             for e in range(len(self.tasks)):
                 pos=0
@@ -59,11 +57,16 @@ class Tasklist:
     def remove(self,str:str):
         task=None
         for e in self.tasks:
-            if e.text==str:
+            if type(e)==Text2D and e.text==str:
                 task=e
         if task!=None:
             if task in window.layers[task.layer]:
                 task.remove(self.window)
+            self.tasks.remove(task)
+            self.update()
+    def removeobject(self,task):
+        if task in window.layers[task.layer]:
+            task.remove(self.window)
             self.tasks.remove(task)
             self.update()
     def removelist(self,window:Window):

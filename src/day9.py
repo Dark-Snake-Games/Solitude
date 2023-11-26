@@ -50,7 +50,7 @@ def load():
     startpos = sprite.position
     computer = Image2D("Assets/PcDesk_sprite.png",position=middle)
     room=Image2D("Assets/Room_sprite.png",position=middle)
-    door=Area2D(position=pygame.Vector2(0,64*size_multiplyer),size=pygame.Vector2(32*size_multiplyer))
+    door=Area2D(position=middle+pygame.Vector2(64*size_multiplyer,0),size=pygame.Vector2(32*size_multiplyer))
     
     room.area=True
     room.debug=False
@@ -70,7 +70,9 @@ def load():
     
 load()
 def mainroominit():
-    
+    for e in removetask:
+            tasklist.remove(e)
+            if e in removetask:removetask.remove(e)
     tasklist.init(window)
     room.init(window)
     bed.init(window)
@@ -83,7 +85,7 @@ def mainroominit():
     daycounter.init(window)
     left_wall.init(window)
     right_wall.init(window)
-
+    door.init(window)
 
 def movement(keys):
     acc = Vector2(0.0, 0.0)
@@ -127,7 +129,7 @@ def interacts_with(thing:Rect2D):
 
 def interactions(keys):
     if interacts_with(bed):
-        if bed.name=="Assets/bed.png":
+        if bed.name=="Assets/bed.png" and tasklist.tasks==[]:
             global COUNTER
             COUNTER.num+=1
             changescene("main"+str(COUNTER.num))
