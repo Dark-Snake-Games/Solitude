@@ -7,7 +7,7 @@ bedspeak="Might as well keep it tidy."
 dresserspeak="A pain, but it needs to get done."
 trashspeak="This stuff just keeps piling up."
 doorspeak="It's locked..."
-chat=["OutbackAddy:","OutbackAddy ", "sent an image", " ","Isn't the view","from there ","so pretty???","","I thought you'd"," like it :D"," ","Have you been","doing okay?"]
+chat=["OutbackAddy:","OutbackAddy ", "<img>ImageDay2_1.png","<img>ImageDay2_2.png", " ","Isn't the view","from there ","so pretty???","","I thought you'd"," like it :D"," ","Have you been","doing okay?"]
 anachat="yea im ok"
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))

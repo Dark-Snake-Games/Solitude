@@ -24,7 +24,7 @@ chaoschat.tasks=[Text2D("wewew")]
 closechaosbutton=Button(" ",position=chaoswindow.position,size=Vector2(7.5*9,7.5*7))
 closechaosbutton.visible=False
 chaossendbutton=Button("",position=Vector2(chaoswindow.position+Vector2(0,chaoswindow.rect.height))-Vector2(0,8*7.5),size=Vector2(chaoswindow.rect.width,8*7.5))
-
+chaossendbutton.visible=False
 
 def init():
     global scroll,anachat,chats
@@ -48,10 +48,10 @@ def init():
     for e in game.days[game.COUNTER.num].chat:
         if  "<img>" in e:
             imagepath=e.replace("<img>","")
-            image=Image2D(imagepath,2)
+            image=Image2D("Assets/"+imagepath,2)
             image.debug=False
             chats.append(image)
-        else:chats.append(Text2D(e,color=(0,0,0),font=pygame.font.Font("munro.ttf",size=80)))
+        else:chats.append(Text2D(e,color=(0,0,0),font=pygame.font.Font("munro.ttf",size=60)))
     
 def frame(keys):
     global scroll,anachat
