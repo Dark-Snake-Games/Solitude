@@ -9,6 +9,9 @@ trashspeak="Phew, I need to stop leaving these around."
 doorspeak="It's locked."
 chat=["OutbackAddy:","Anaaaa I just","landed in town!!"," ","We should meet up","sometime its been","forever"," ","I can show you pics","of the trip from"," Australia??"]
 anachat="sounds cool"
+
+firstjoin=True
+
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/Ana_sprite3.png", position=Vector2(150, 55))
@@ -63,6 +66,7 @@ def load():
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     right_wall=Rect2D(position=pygame.Vector2(middle.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     left_wall.visible,right_wall.visible=False,False
+    door.area=True
     tasklist.addtask("bed")
     tasklist.addtask("closet")
     tasklist.addtask("trash")
@@ -70,6 +74,11 @@ def load():
     
 load()
 def mainroominit():
+    global firstjoin
+    if firstjoin:
+        firstjoin=False
+        pygame.mixer.music.load("Assets/DEMO_01.mp3")
+        pygame.mixer.music.play(loops=-1)
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)

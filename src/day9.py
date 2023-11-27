@@ -9,6 +9,9 @@ trashspeak="trash"
 doorspeak="door"
 chat=["OutbackAddy:","Anaaaa I just","landed in town!!"," ","We should meet up","sometime its been","forever"," ","I can show you pics","of the trip from"," Australia??"]
 anachat="sounds cool"
+
+firstjoin=True
+
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/Ana_sprite3.png", position=Vector2(150, 55))
@@ -70,6 +73,10 @@ def load():
     
 load()
 def mainroominit():
+    
+    global firstjoin
+    if firstjoin:
+        firstjoin=False
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)

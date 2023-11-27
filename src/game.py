@@ -121,6 +121,7 @@ import pc
 
 
 def main():
+    pygame.mixer.init()
     setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()

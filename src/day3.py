@@ -70,6 +70,7 @@ def load():
     
 load()
 def mainroominit():
+    
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)
