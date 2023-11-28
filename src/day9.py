@@ -52,7 +52,7 @@ def load():
     bedarea.rect=bed.rect
     startpos = sprite.position
     computer = Image2D("Assets/PcDesk_sprite.png",position=middle)
-    room=Image2D("Assets/Room_sprite.png",position=middle)
+    room=Image2D("Assets/Room_sprite3.png",position=middle)
     door=Area2D(position=middle+pygame.Vector2(64*size_multiplyer,0),size=pygame.Vector2(32*size_multiplyer))
     
     room.area=True
