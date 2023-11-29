@@ -9,7 +9,7 @@ trashspeak="Why do I bother if there’s always more..."
 doorspeak="I don’t want to"
 chat=["Are you really okay?","Sorry thats weird","","Just been a while"
       ,"since i saw you :)","","No picture today,","hope youre not too sad~"]
-
+firsjoin=True
 anachat="its fine"
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
@@ -74,7 +74,11 @@ def load():
     
 load()
 def mainroominit():
-    
+    global firstjoin
+    if firstjoin:
+        firstjoin=False
+        pygame.mixer.music.load("Isloation_Draft_1.mp3")
+        pygame.mixer.music.play(loops=-1)
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)
