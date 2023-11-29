@@ -80,8 +80,8 @@ class Tasklist:
         self.update()
 
 class Speech(Text2D):
-    def __init__(self,text,window) -> None:
-        super().__init__(text,font=pygame.font.Font("munro.ttf",40))
+    def __init__(self,text,window,color=(255,255,255)) -> None:
+        super().__init__(text,font=pygame.font.Font("munro.ttf",40),color=color)
         self.window=window
         self.position=pygame.Vector2(WIDTH,HEIGHT)/2-pygame.Vector2(self.color_rect.size)/2+pygame.Vector2(0,200)
         self.init(window)

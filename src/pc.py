@@ -25,10 +25,10 @@ closechaosbutton=Button(" ",position=chaoswindow.position,size=Vector2(7.5*9,7.5
 closechaosbutton.visible=False
 chaossendbutton=Button("",position=Vector2(chaoswindow.position+Vector2(0,chaoswindow.rect.height))-Vector2(0,8*7.5),size=Vector2(chaoswindow.rect.width,8*7.5))
 chaossendbutton.visible=False
-
+gameplayed=False 
 def init():
-    global scroll,anachat,chats
-    
+    global scroll,anachat,chats,gameplayed
+    gameplayed=False
     anachat=False
     scroll=0
     desktop.init(game.window)
@@ -52,9 +52,9 @@ def init():
             image.debug=False
             chats.append(image)
         else:chats.append(Text2D(e,color=(0x14,0x0e,0x43),font=pygame.font.Font("munro.ttf",size=60)))
-    
+
 def frame(keys):
-    global scroll,anachat
+    global scroll,anachat,gameplayed
     if powerbutton.pressed:
         if chaoswindow in game.window.layers[1]:
             chaoschat.removelist(game.window)
@@ -69,7 +69,11 @@ def frame(keys):
 
     
     if gamebutton.pressed or gameicon.pressed:
-        changescene("platformer")
+        if not gameplayed:
+            game.Speech(f"Level {game.days[game.COUNTER.num].day} complete",game.window,(0,0,0))
+            game.removetask.append("game")
+            gameplayed=True
+        # changescene("platformer")
     
     if chaosbutton.pressed and not chaoswindow in game.window.layers[1]:
         chaoschat.init(game.window)

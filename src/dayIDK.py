@@ -25,7 +25,7 @@ left1 = Image2D(filename="Assets/Player/Ana_sprite10.png", position=Vector2(150,
 left2 = Image2D(filename="Assets/Player/Ana_sprite11.png", position=Vector2(150, 55))
 left3 = Image2D(filename="Assets/Player/Ana_sprite12.png", position=Vector2(150, 55))
 left = Spritesheet(*([left2] * 12 + [left3] * 12))
-middle=Vector2(WIDTH/2-720/2,0)
+middle=Vector2(WIDTH/2,HEIGHT/2)
 
 
 
@@ -41,28 +41,31 @@ middle=Vector2(WIDTH/2-720/2,0)
 
 def load():
     global door,left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
+    room=Image2D("Assets/Room_sprite2.png",position=middle)
+    room.position=middle-Vector2(room.size)/2
+    tile=room.size.x/3
     tasklist=Tasklist()
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
-    bed = Image2D("Assets/bed2.png", layer=1,position=middle+Vector2(0,64*size_multiplyer))
+    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle-Vector2(16,16)*7.5,size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
+    bed = Image2D("Assets/bed2.png", layer=1,position=room.position+Vector2(0,tile*2))
+    print(bed.position)
     bedarea=Area2D()
     bedarea.rect=bed.rect
     startpos = sprite.position
-    computer = Image2D("Assets/PcDesk_sprite.png",position=middle)
-    room=Image2D("Assets/Room_sprite4.png",position=middle)
-    door=Area2D(position=middle+pygame.Vector2(64*size_multiplyer,0),size=pygame.Vector2(32*size_multiplyer))
-    door.debug=True
+    computer = Image2D("Assets/PcDesk_sprite.png",position=room.position)
+    
+    door=Area2D(position=room.position+pygame.Vector2(tile*2,0),size=pygame.Vector2(tile))
     
     room.area=True
     room.debug=False
-    trash=Image2D("Assets/trash2.png",position=middle+Vector2(32*size_multiplyer,0))
+    trash=Image2D("Assets/trash2.png",position=room.position+Vector2(tile,0))
     trash.area=True
-    closet=Image2D("Assets/dresser2.png",position=middle+Vector2(64*size_multiplyer),offset=Vector2(8*size_multiplyer,0))
+    closet=Image2D("Assets/dresser2.png",position=room.position+Vector2(tile*2),offset=Vector2(8*size_multiplyer,0))
     daycounter=Text2D("Day "+str(day),font=pygame.font.Font("munro.ttf",40))
     daycounter.position=pygame.Vector2(WIDTH,HEIGHT)-pygame.Vector2(daycounter.color_rect.width,daycounter.color_rect.height)
     
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
-    right_wall=Rect2D(position=pygame.Vector2(middle.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
+    right_wall=Rect2D(position=pygame.Vector2(room.position.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     left_wall.visible,right_wall.visible=False,False
     tasklist.addtask("bed")
     tasklist.addtask("closet")
@@ -79,7 +82,6 @@ def mainroominit():
     room.init(window)
     bed.init(window)
     # text.init(window)
-    sprite.position=middle+Vector2(150, 55)
     computer.init(window)
     closet.init(window)
     trash.init(window)
@@ -88,7 +90,7 @@ def mainroominit():
     left_wall.init(window)
     right_wall.init(window)
     door.init(window)
-
+    
 
 def movement(keys):
     acc = Vector2(0.0, 0.0)
@@ -132,7 +134,7 @@ def interacts_with(thing:Rect2D):
 
 def interactions(keys):
     if interacts_with(bed):
-        if bed.name=="Assets/bed.png" and tasklist.tasks==[]:
+        if bed.name=="Assets/bed.png":
             global COUNTER
             COUNTER.num+=1
             changescene("main"+str(COUNTER.num))
@@ -141,6 +143,7 @@ def interactions(keys):
             tasklist.remove("bed")
             Speech(bedspeak,window)
     if interacts_with(computer):
+        tasklist.removelist(window)
         changescene("pc")
     if interacts_with(door):
         Speech(doorspeak,window)

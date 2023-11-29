@@ -139,6 +139,7 @@ def interactions(keys):
             tasklist.remove("bed")
             Speech(bedspeak,window)
     if interacts_with(computer):
+        tasklist.removelist(window)
         changescene("pc")
     if interacts_with(door):
         Speech(doorspeak,window)
