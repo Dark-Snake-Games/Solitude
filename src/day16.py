@@ -43,6 +43,7 @@ class Reflect(Image2D):
         self.alpha=0
         self.image.convert_alpha()
         self.increase=True
+        self.image2=Image2D("Assets/monitor.png")
     def render(self, window: Window):
         self.image.set_alpha(self.alpha)
         if self.increase:
@@ -54,6 +55,7 @@ class Reflect(Image2D):
         if self.alpha>=255:
             self.increase=False
         super().render(window)
+        self.image2.render(window)
         print(self.alpha)
 
 
