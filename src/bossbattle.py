@@ -1,6 +1,8 @@
 from DSEngine import *
 import game
+import os
 import pygame
+c=None
 text=Text2D("Boss Battle Unlocked! Want to play\nthe final level of the game?",position=Vector2(0,0),font=pygame.font.Font("munro.ttf",60))
 yes=Button("yes",font=pygame.font.Font("munro.ttf",90),color=(0,0,0))
 no=Button("no",font=pygame.font.Font("munro.ttf",160))
@@ -51,6 +53,8 @@ class noReflect(Image2D):
         super().render(window)
 
 def init():
+    global c
+    c = None
     text.position=Vector2(game.WIDTH,game.HEIGHT*0.9)/2-text.size/2
     yes.position=text.position+Vector2(0,text.size.y*1.25)
     no.position=text.position+text.size+Vector2(-no.size.x,0)
@@ -59,7 +63,18 @@ def init():
     no.init(game.window)
     pygame.mixer.music.stop()
 def frame(keys):
+    global c
+    if os.path.exists("assets/1.sav"):
+        f = open("assets/1.sav")
+        c = int(f.read())
+        if c != None:
+            if c:
+                yes.pressed = True
+            if not c:
+                no.pressed = True
     if yes.pressed:
+        f = open("assets/1.sav", "w")
+        f.write(str(True))
         resetwindow()
         crash=Text2D("game crahsed",position=yes.position)
         crash.init(game.window)
@@ -71,6 +86,8 @@ def frame(keys):
                 crash.remove(game.window)
         exit()
     if no.pressed:
+        f = open("assets/1.sav", "w")
+        f.write(str(False))
         resetwindow()
         game.window.frame()
         pygame.mixer.music.load("Assets/door.mp3")

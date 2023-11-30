@@ -4,7 +4,7 @@ The main game file. This contains the room and all assets and processes.
 
 from DSEngine import *
 from pygame.display import update
-#from os import chdir
+import os
 from subprocess import run
 #run(['cd', 'src/'])
 #chdir("src")
@@ -125,12 +125,16 @@ def main():
     setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
-    for e in range(len(days)):
-    # e = 1
-        addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
-    changescene("main0")
-    addscene("bossbattle",scene(bb.frame,bb.init))
-    addscene("pc",scene(pc.frame,pc.init))
+    if not os.path.exists("assets/1.sav"):
+        for e in range(len(days)):
+        # e = 7
+            addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
+        changescene("main0")
+        addscene("pc",scene(pc.frame,pc.init))
+        addscene("bossbattle",scene(bb.frame,bb.init))
+    else:
+        addscene("bossbattle",scene(bb.frame,bb.init))
+        changescene("bossbattle")
     global TITLE, HEIGHT, WIDTH
 
     while window.running:
