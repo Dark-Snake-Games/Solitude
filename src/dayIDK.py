@@ -1,14 +1,15 @@
 from DSEngine import *
 from DSEngine.etypes import Window
+import pygame
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
 
-day=1
-bedspeak="bed"
+day="???"
+bedspeak="Should I bother?"
 dresserspeak="dresser"
-trashspeak="trash"
-doorspeak="door"
-chat=["OutbackAddy:","Anaaaa I just","landed in town!!"," ","We should meet up","sometime its been","forever"," ","I can show you pics","of the trip from"," Australia??"]
-anachat="sounds cool"
+trashspeak="Why do I bother if there’s always more..."
+doorspeak="I don't want to."
+chat=["Please I’m getting","really scared for","you.","Talk to me","About anything","i won't be mad.","Ana","I’m here, okay?","I won’t drag you ","anywhere that will","make you unhappy,","I promise."]
+anachat="Addy..."
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
 down2 = Image2D(filename="Assets/Player/Ana_sprite2.png", position=Vector2(150, 55))
 down3 = Image2D(filename="Assets/Player/Ana_sprite3.png", position=Vector2(150, 55))
@@ -27,7 +28,7 @@ left3 = Image2D(filename="Assets/Player/Ana_sprite12.png", position=Vector2(150,
 left = Spritesheet(*([left2] * 12 + [left3] * 12))
 middle=Vector2(WIDTH/2,HEIGHT/2)
 
-
+loadedfirsttime=False
 
 
 
@@ -35,13 +36,32 @@ middle=Vector2(WIDTH/2,HEIGHT/2)
         
         
 
-
+class Reflect(Image2D):
+    def __init__(self, filename: str, window):
+        super().__init__(filename, 2)
+        self.alpha=0
+        self.image.convert_alpha()
+        self.increase=True
+        self.image2=Image2D("Assets/monitor.png")
+    def render(self, window: Window):
+        self.image.set_alpha(self.alpha)
+        if self.increase:
+            self.alpha+=3
+        else:
+            self.alpha-=3
+            if self.alpha<=0:
+                self.remove(self.window)
+        if self.alpha>=255:
+            self.increase=False
+        super().render(window)
+        self.image2.render(window)
+        print(self.alpha)
 
 
 
 def load():
     global door,left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
-    room=Image2D("Assets/Room_sprite2.png",position=middle)
+    room=Image2D("Assets/Room_sprite4.png",position=middle)
     room.position=middle-Vector2(room.size)/2
     tile=room.size.x/3
     tasklist=Tasklist()
@@ -67,14 +87,17 @@ def load():
     left_wall=Rect2D(position=pygame.Vector2(room.position.x+47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     right_wall=Rect2D(position=pygame.Vector2(room.position.x+720-47.5,room.position.y),size=(pygame.Vector2(1,HEIGHT)))
     left_wall.visible,right_wall.visible=False,False
-    tasklist.addtask("bed")
-    tasklist.addtask("closet")
-    tasklist.addtask("trash")
     tasklist.addtask("game")
     
 load()
 def mainroominit():
-    
+    global loadedfirsttime
+    if not loadedfirsttime:loadedfirsttime=True
+    else:
+        refl=Reflect("Assets/reflect.png",window)
+        refl.init(window)
+        while refl in window.layers[2]:
+            window.frame()
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)
@@ -134,28 +157,16 @@ def interacts_with(thing:Rect2D):
 
 def interactions(keys):
     if interacts_with(bed):
-        if bed.name=="Assets/bed.png":
+        if tasklist.tasks==[]:
             global COUNTER
             COUNTER.num+=1
             changescene("main"+str(COUNTER.num))
-        else:
-            bed.changeimage("Assets/bed.png")
-            tasklist.remove("bed")
-            Speech(bedspeak,window)
     if interacts_with(computer):
         tasklist.removelist(window)
         changescene("pc")
     if interacts_with(door):
         Speech(doorspeak,window)
         
-    if interacts_with(closet):
-        closet.changeimage("Assets/dresser1.png")
-        tasklist.remove("closet")
-        Speech(dresserspeak,window)
-    if interacts_with(trash):
-        trash.changeimage("Assets/trash.png")
-        tasklist.remove("trash")
-        Speech(trashspeak,window)
 
 
 def mainroom(keys):

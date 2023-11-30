@@ -2,12 +2,12 @@ from DSEngine import *
 from DSEngine.etypes import Window
 from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
 
-day=1
+day=3
 bedspeak="Should I bother?"
 dresserspeak="dresser"
 trashspeak="What a pain..."
 doorspeak="I don’t need to go out."
-chat=["I know we’ve been","texting, but we still","haven't caught up!",
+chat=[f"<img>ImageDay{day}_1.png",f"<img>ImageDay{day}_2.png","I know we’ve been","texting, but we still","haven't caught up!",
       "How do you feel about","this weekend?"]
 anachat="busy sorry"
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))

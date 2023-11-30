@@ -29,7 +29,7 @@ left3 = Image2D(filename="Assets/Player/Ana_sprite12.png", position=Vector2(150,
 left = Spritesheet(*([left2] * 12 + [left3] * 12))
 middle=Vector2(WIDTH/2,HEIGHT/2)
 
-
+firstjoin=True
 
 
 
@@ -77,7 +77,7 @@ def mainroominit():
     global firstjoin
     if firstjoin:
         firstjoin=False
-        pygame.mixer.music.load("Isloation_Draft_1.mp3")
+        pygame.mixer.music.load("Assets/Isolation_Draft_1.mp3")
         pygame.mixer.music.play(loops=-1)
     for e in removetask:
             tasklist.remove(e)

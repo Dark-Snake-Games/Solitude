@@ -69,7 +69,9 @@ def frame(keys):
 
     
     if gamebutton.pressed or gameicon.pressed:
-        if not gameplayed:
+        if daytext.text=="DAY???":
+            changescene("bossbattle")
+        elif not gameplayed:
             game.Speech(f"Level {game.days[game.COUNTER.num].day} complete",game.window,(0,0,0))
             game.removetask.append("game")
             gameplayed=True

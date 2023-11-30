@@ -7,7 +7,7 @@ bedspeak="Should I bother?"
 dresserspeak="dresser"
 trashspeak="It stinks"
 doorspeak="There’s no point in that..."
-chat=["Missing you","","I know its kinda","cringe but this one",
+chat=["Missing you","", f"<img>ImageDay{day}_1.png",f"<img>ImageDay{day}_2.png","I know its kinda","cringe but this one",
       "reminded me of you!","","Native to Australia",":D kinda neat"]
 anachat="cool"
 down1 = Image2D(filename="Assets/Player/Ana_sprite1.png", position=Vector2(150, 55))
