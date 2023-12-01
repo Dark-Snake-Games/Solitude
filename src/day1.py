@@ -1,6 +1,7 @@
 from DSEngine import *
 from DSEngine.etypes import Window
-from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
+from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech,m1
+import game
 
 day=1
 bedspeak="First step to a clean room, first step to a clean mind."
@@ -74,13 +75,14 @@ def load():
     
 load()
 def mainroominit():
-    global firstjoin
+    global firstjoin, m1
     pygame.mixer.set_num_channels(1000)
     if firstjoin:
         firstjoin=False
         bg_sfx = pygame.mixer.Sound("Assets/DEMO_01.ogg")
         chan1 = pygame.mixer.find_channel()
         chan1.queue(bg_sfx)
+        game.m1 = chan1
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)

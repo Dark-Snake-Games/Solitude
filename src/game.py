@@ -26,6 +26,8 @@ SPR_SIZE = {
 
 window = Window(title=TITLE, fps=60, size=(WIDTH, HEIGHT), bg=(0, 0, 0))
 audio_man = AudioManager()
+m1 = None
+m2 = None
 removetask=[]
 
 
