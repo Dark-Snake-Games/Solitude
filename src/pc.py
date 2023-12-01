@@ -17,7 +17,7 @@ daytext=Text2D("day",color=(0,0,0),position=Vector2(5*7.5,720),font=pygame.font.
 daytext.position.y-=daytext.size.y +2*7.5
 chaoswindow=Image2D("Assets/Chaos_textbox.png",position=Vector2(1280,720)/2)
 chaoswindow.position-=chaoswindow.size/2+Vector2(0,7.5*6)
-chaoschat=game.Tasklist(position=chaoswindow.position+Vector2(16*7.5,7*7.5))
+chaoschat=game.Chat(position=chaoswindow.position+Vector2(16*7.5,7*7.5))
 chats=[]
 anachat=False
 chaoschat.tasks=[Text2D("wewew")]

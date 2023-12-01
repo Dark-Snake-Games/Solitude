@@ -86,6 +86,7 @@ def mainroominit():
     closet.init(window)
     trash.init(window)
     sprite.init(window)
+    sprite.position=bed.position+Vector2(7.5*32, 0)
     daycounter.init(window)
     left_wall.init(window)
     right_wall.init(window)
