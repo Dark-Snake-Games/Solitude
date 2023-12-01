@@ -134,7 +134,6 @@ def main():
     
     
     addscene("bossbattle",scene(bossbattle.frame,bossbattle.init))
-    addscene("main10",scene(quit,quit))
     addscene("pc",scene(pc.frame,pc.init))
     global TITLE, HEIGHT, WIDTH
 
