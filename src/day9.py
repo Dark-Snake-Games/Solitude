@@ -77,7 +77,7 @@ def mainroominit():
     global firstjoin
     if firstjoin:
         firstjoin=False
-        pygame.mixer.music.load("Assets\Cold_Theme_Loop.ogg")
+        pygame.mixer.music.load("Assets/Cold_Theme_Loop.ogg")
         pygame.mixer.music.play(loops=-1)
     for e in removetask:
             tasklist.remove(e)

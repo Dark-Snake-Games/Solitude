@@ -74,7 +74,7 @@ def frame(keys):
             if not c:
                 no.pressed = True
     if yes.pressed:
-        f = open("assets/1.sav", "w")
+        f = open("Assets/1.sav", "w")
         f.write(str(1))
         resetwindow()
         #crash=Text2D("game crahsed",position=yes.position)
@@ -87,7 +87,7 @@ def frame(keys):
             #     crash.remove(game.window)
         exit()
     if no.pressed:
-        f = open("assets/1.sav", "w")
+        f = open("Assets/1.sav", "w")
         f.write(str(0))
         resetwindow()
         game.window.frame()
