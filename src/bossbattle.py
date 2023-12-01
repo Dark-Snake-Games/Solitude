@@ -67,6 +67,7 @@ def frame(keys):
     if os.path.exists("assets/1.sav"):
         f = open("assets/1.sav")
         c = int(f.read())
+        print(c)
         if c != None:
             if c:
                 yes.pressed = True
@@ -74,20 +75,20 @@ def frame(keys):
                 no.pressed = True
     if yes.pressed:
         f = open("assets/1.sav", "w")
-        f.write(str(True))
+        f.write(str(1))
         resetwindow()
-        crash=Text2D("game crahsed",position=yes.position)
-        crash.init(game.window)
+        #crash=Text2D("game crahsed",position=yes.position)
+        #crash.init(game.window)
         refl=Reflect("Assets/clearreflect.png",game.window)
         refl.init(game.window)
         while refl in game.window.layers[2]:
             game.window.frame()
-            if refl.stop>0 and crash in game.window.layers["GUI"]:
-                crash.remove(game.window)
+            # if refl.stop>0 and crash in game.window.layers["GUI"]:
+            #     crash.remove(game.window)
         exit()
     if no.pressed:
         f = open("assets/1.sav", "w")
-        f.write(str(False))
+        f.write(str(0))
         resetwindow()
         game.window.frame()
         pygame.mixer.music.load("Assets/door.mp3")
