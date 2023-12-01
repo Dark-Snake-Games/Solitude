@@ -1,6 +1,7 @@
 from DSEngine import *
 from DSEngine.etypes import Window
-from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech
+from game import size_multiplyer,window,WIDTH,HEIGHT,COUNTER,SPR_SIZE,removetask,Tasklist,Speech,m1
+import game
 
 day=9
 bedspeak="Should I bother?"
@@ -74,9 +75,10 @@ def load():
     
 load()
 def mainroominit():
-    global firstjoin
+    global firstjoin, m1
     if firstjoin:
         firstjoin=False
+        game.m1.pause()
         pygame.mixer.music.load("Assets/Cold_Theme_Loop.ogg")
         pygame.mixer.music.play(loops=-1)
     for e in removetask:
