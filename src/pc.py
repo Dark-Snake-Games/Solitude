@@ -55,6 +55,12 @@ def init():
 
 def frame(keys):
     global scroll,anachat,gameplayed
+    event_list = pygame.event.get()
+    for event in event_list:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            boot_sfx = pygame.mixer.Sound("Assets/SFX_MOUSE_CLICK.mp3")
+            chan3 = pygame.mixer.find_channel()
+            chan3.queue(boot_sfx)
     if powerbutton.pressed:
         if chaoswindow in game.window.layers[1]:
             chaoschat.removelist(game.window)

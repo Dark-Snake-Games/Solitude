@@ -4,7 +4,7 @@ The main game file. This contains the room and all assets and processes.
 
 from DSEngine import *
 from pygame.display import update
-import os
+#from os import chdir
 from subprocess import run
 #run(['cd', 'src/'])
 #chdir("src")
@@ -80,8 +80,8 @@ class Tasklist:
         self.update()
 
 class Speech(Text2D):
-    def __init__(self,text,window,color=(255,255,255)) -> None:
-        super().__init__(text,font=pygame.font.Font("munro.ttf",40),color=color)
+    def __init__(self,text,window) -> None:
+        super().__init__(text,font=pygame.font.Font("munro.ttf",40))
         self.window=window
         self.position=pygame.Vector2(WIDTH,HEIGHT)/2-pygame.Vector2(self.color_rect.size)/2+pygame.Vector2(0,200)
         self.init(window)
@@ -104,7 +104,7 @@ import day16
 import day23
 import dayIDK
 from test import *
-import bossbattle as bb
+from platformr import *
 
 days=[day1,day2,day3,day5,day9,day16,day23,dayIDK]
 
@@ -125,16 +125,15 @@ def main():
     setscenes( {"scenetest": scene(test, testinit)})
     setmainwindow(window)
     resetwindow()
-    if not os.path.exists("assets/1.sav"):
-        for e in range(len(days)):
-        # e = 7
-            addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
-        changescene("main0")
-        addscene("pc",scene(pc.frame,pc.init))
-        addscene("bossbattle",scene(bb.frame,bb.init))
-    else:
-        addscene("bossbattle",scene(bb.frame,bb.init))
-        changescene("bossbattle")
+    for e in range(len(days)):
+    # e = 1
+        addscene("main"+str(e),scene(days[e].mainroom,days[e].mainroominit))
+    changescene("main0")
+    
+    
+    addscene("platformer",scene(platformer,platformerinit))
+    addscene("main10",scene(quit,quit))
+    addscene("pc",scene(pc.frame,pc.init))
     global TITLE, HEIGHT, WIDTH
 
     while window.running:

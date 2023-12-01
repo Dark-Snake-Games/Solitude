@@ -75,10 +75,12 @@ def load():
 load()
 def mainroominit():
     global firstjoin
+    pygame.mixer.set_num_channels(1000)
     if firstjoin:
         firstjoin=False
-        pygame.mixer.music.load("Assets/DEMO_01.mp3")
-        pygame.mixer.music.play(loops=-1)
+        bg_sfx = pygame.mixer.Sound("Assets/DEMO_01.ogg")
+        chan1 = pygame.mixer.find_channel()
+        chan1.queue(bg_sfx)
     for e in removetask:
             tasklist.remove(e)
             if e in removetask:removetask.remove(e)
@@ -115,6 +117,10 @@ def movement(keys):
         sheet_to_play="down"
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta
+    if acc != pygame.Vector2(0, 0):
+        boot_sfx = pygame.mixer.Sound("Assets/SFX_WALKING.mp3")
+        chan3 = pygame.mixer.find_channel()
+        chan3.queue(boot_sfx)
     acc*=size_multiplyer
     
     
@@ -147,11 +153,16 @@ def interactions(keys):
             tasklist.remove("bed")
             Speech(bedspeak,window)
     if interacts_with(computer):
+        boot_sfx = pygame.mixer.Sound("Assets/SFX_PC_ON.mp3")
+        chan3 = pygame.mixer.find_channel()
+        chan3.queue(boot_sfx)
         tasklist.removelist(window)
         changescene("pc")
     if interacts_with(door):
+        door_sfx = pygame.mixer.Sound("Assets/SFX_DOOR_RATTLE.mp3")
+        chan2 = pygame.mixer.find_channel()
+        chan2.queue(door_sfx)
         Speech(doorspeak,window)
-        
     if interacts_with(closet):
         closet.changeimage("Assets/dresser1.png")
         tasklist.remove("closet")
