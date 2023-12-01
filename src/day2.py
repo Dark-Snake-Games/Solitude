@@ -139,9 +139,15 @@ def interactions(keys):
             tasklist.remove("bed")
             Speech(bedspeak,window)
     if interacts_with(computer):
+        boot_sfx = pygame.mixer.Sound("Assets/SFX_PC_ON.mp3")
+        chan3 = pygame.mixer.find_channel()
+        chan3.queue(boot_sfx)
         tasklist.removelist(window)
         changescene("pc")
     if interacts_with(door):
+        door_sfx = pygame.mixer.Sound("Assets/SFX_DOOR_RATTLE.mp3")
+        chan2 = pygame.mixer.find_channel()
+        chan2.queue(door_sfx)
         Speech(doorspeak,window)
         
     if interacts_with(closet):

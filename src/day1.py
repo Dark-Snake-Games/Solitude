@@ -117,9 +117,9 @@ def movement(keys):
         sheet_to_play="down"
     acc.x = keys[key_to_scancode("d")] - keys[key_to_scancode("a")] # * window.delta
     acc.y = keys[key_to_scancode("s")] - keys[key_to_scancode("w")] # * window.delta
-    if acc != pygame.Vector2(0, 0):
-        boot_sfx = pygame.mixer.Sound("Assets/SFX_WALKING.mp3")
-        chan3 = pygame.mixer.find_channel()
+    boot_sfx = pygame.mixer.Sound("Assets/SFX_WALKING.mp3")
+    chan3 = pygame.mixer.find_channel()
+    if acc != pygame.Vector2(0, 0) and chan3.get_busy() == True:
         chan3.queue(boot_sfx)
     acc*=size_multiplyer
     
