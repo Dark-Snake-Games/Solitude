@@ -47,7 +47,7 @@ def load():
     global door,left_wall,right_wall,daycounter,animationsheet,sprite,bed,bedarea,startpos,computer,room,trash,closet,tasklist
     tasklist=Tasklist()
     animationsheet = AnimationSheet(default=down1, down=down, up=up, left=left, right=right)
-    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=middle+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
+    sprite = AnimatedSprite2D(layer=1, sheet=animationsheet, position=bed.position+Vector2(150, 55),size=Vector2(6,32-20)*size_multiplyer,offset=Vector2(13,20)*size_multiplyer)
     bed = Image2D("Assets/bed2.png", layer=1,position=middle+Vector2(0,64*size_multiplyer))
     bedarea=Area2D()
     bedarea.rect=bed.rect
@@ -90,7 +90,7 @@ def mainroominit():
     room.init(window)
     bed.init(window)
     # text.init(window)
-    sprite.position=middle+Vector2(150, 55)
+    sprite.position=bed.position+Vector2(7.5*32, 0)
     computer.init(window)
     closet.init(window)
     trash.init(window)

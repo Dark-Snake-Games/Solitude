@@ -36,6 +36,56 @@ class Tasklist:
         self.tasks=[]
         self.window=None
         self.position=position
+        self.title=Text2D("To do:",font=pygame.font.Font("munro.ttf",60))
+        pass
+    def update(self):
+        tasks=[self.title]+self.tasks
+        if self.window!=None:
+            for e in range(len(tasks)):
+                pos=0
+                for i in range(e):
+                    if type(tasks[i])==Text2D:
+                        pos+=tasks[i].color_rect.height
+                    elif type(tasks[i]) == Image2D:
+                        pos+=tasks[i].rect.height
+                task=tasks[e]
+                task.position=self.position+Vector2(0,pos)
+                if not task in window.layers[task.layer]:
+                    task.init(self.window)
+    def addtask(self,str):
+        task=Text2D(str,position=pygame.Vector2(0,0),font=pygame.font.Font("munro.ttf",40))
+        self.tasks.append(task)
+        
+        self.update()
+    def remove(self,str:str):
+        task=None
+        for e in self.tasks:
+            if type(e)==Text2D and e.text==str:
+                task=e
+        if task!=None:
+            if task in window.layers[task.layer]:
+                task.remove(self.window)
+            self.tasks.remove(task)
+            self.update()
+    def removeobject(self,task):
+        if task in window.layers[task.layer]:
+            task.remove(self.window)
+            self.tasks.remove(task)
+            self.update()
+    def removelist(self,window:Window):
+        for e in self.tasks:
+            e.remove(window)
+        self.window=None
+    def init(self,window):
+        self.window=window
+        for e in self.tasks:
+            e.init(self.window)
+        self.update()
+class Chat:
+    def __init__(self,position=Vector2(0,0)) -> None:
+        self.tasks=[]
+        self.window=None
+        self.position=position
         pass
     def update(self):
         
@@ -80,7 +130,6 @@ class Tasklist:
         for e in self.tasks:
             e.init(self.window)
         self.update()
-
 class Speech(Text2D):
     def __init__(self,text,window,color=(255, 255, 255)) -> None:
         super().__init__(text,font=pygame.font.Font("munro.ttf",40),color=color)

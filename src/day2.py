@@ -78,7 +78,7 @@ def mainroominit():
     room.init(window)
     bed.init(window)
     # text.init(window)
-    sprite.position=middle+Vector2(150, 55)
+    sprite.position=bed.position+Vector2(7.5*32, 0)
     computer.init(window)
     closet.init(window)
     trash.init(window)
