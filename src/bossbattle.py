@@ -40,16 +40,16 @@ class noReflect(Image2D):
     def render(self, window: Window):
         self.image.set_alpha(self.alpha)
         if self.increase:
-            self.alpha+=3
+            self.alpha+=2
         elif self.stop<=0:
-            self.alpha-=3
+            self.alpha-=2
             if self.alpha<=0:
                 self.remove(self.window)
         else:
             self.stop-=1
         if self.increase and self.alpha>=255:
             self.increase=False
-            self.stop=60*20
+            self.stop=60*18
         super().render(window)
 
 def init():
@@ -61,11 +61,11 @@ def init():
     text.init(game.window)
     yes.init(game.window)
     no.init(game.window)
-    pygame.mixer.music.stop()
+    pygame.mixer.music.fadeout(500)
 def frame(keys):
     global c
-    if os.path.exists("assets/1.sav"):
-        f = open("assets/1.sav")
+    if os.path.exists("Assets/1.sav"):
+        f = open("Assets/1.sav")
         c = int(f.read())
         print(c)
         if c != None:
@@ -74,7 +74,7 @@ def frame(keys):
             if not c:
                 no.pressed = True
     if yes.pressed:
-        f = open("assets/1.sav", "w")
+        f = open("Assets/1.sav", "w")
         f.write(str(1))
         resetwindow()
         #crash=Text2D("game crahsed",position=yes.position)
@@ -87,7 +87,7 @@ def frame(keys):
             #     crash.remove(game.window)
         exit()
     if no.pressed:
-        f = open("assets/1.sav", "w")
+        f = open("Assets/1.sav", "w")
         f.write(str(0))
         resetwindow()
         game.window.frame()
@@ -95,9 +95,13 @@ def frame(keys):
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():
             pass
+        pygame.mixer.music.load("Assets/DEMO_01.ogg")
+        pygame.mixer.music.set_volume(0)
+        pygame.mixer.music.play()
         refl=noReflect("Assets/goodend.png",game.window)
         refl.init(game.window)
         while refl in game.window.layers[2]:
+            pygame.mixer.music.set_volume(refl.alpha/255)
             game.window.frame()
         exit()
             

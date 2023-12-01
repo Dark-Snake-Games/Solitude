@@ -106,7 +106,7 @@ import day16
 import day23
 import dayIDK
 from test import *
-from platformr import *
+import bossbattle
 
 days=[day1,day2,day3,day5,day9,day16,day23,dayIDK]
 
@@ -133,7 +133,7 @@ def main():
     changescene("main0")
     
     
-    addscene("platformer",scene(platformer,platformerinit))
+    addscene("bossbattle",scene(bossbattle.frame,bossbattle.init))
     addscene("main10",scene(quit,quit))
     addscene("pc",scene(pc.frame,pc.init))
     global TITLE, HEIGHT, WIDTH
